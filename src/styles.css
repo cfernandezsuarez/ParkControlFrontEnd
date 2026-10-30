@@ -1,1 +1,39 @@
 @import "tailwindcss";
+
+@theme {
+    /* --- Fila 1: Amarillo / Oliva --- */
+    --color-brand-yellow-50: #F1FB04;
+    --color-brand-yellow-100: #CDD503;
+    --color-brand-yellow-200: #A6AC02;
+    --color-brand-yellow-300: #808801;
+    --color-brand-yellow-400: #5D6101;
+    --color-brand-yellow-500: #3C3E00;
+    --color-brand-yellow-600: #1D1F00;
+
+    /* --- Fila 2: Azul (El color principal de tu app) --- */
+    --color-brand-blue-50: #CFD9FF;
+    --color-brand-blue-100: #95B0FF;
+    --color-brand-blue-200: #4C88FF;
+    --color-brand-blue-300: #0364D5;
+    --color-brand-blue-400: #014394;
+    --color-brand-blue-500: #002557;
+    --color-brand-blue-600: #00102D;
+
+    /* --- Fila 3: Violeta / Púrpura --- */
+    --color-brand-purple-50: #ECE5FF;
+    --color-brand-purple-100: #CCB5FF;
+    --color-brand-purple-200: #AF83FE;
+    --color-brand-purple-300: #9646FE;
+    --color-brand-purple-400: #7403D5;
+    --color-brand-purple-500: #480189;
+    --color-brand-purple-600: #210043;
+
+    /* --- Fila 4: Grises / Neutros --- */
+    --color-brand-gray-50: #F0F1EA;
+    --color-brand-gray-100: #CCCDC7;
+    --color-brand-gray-200: #A5A6A1;
+    --color-brand-gray-300: #80807D;
+    --color-brand-gray-400: #5C5D5A;
+    --color-brand-gray-500: #3B3C3A;
+    --color-brand-gray-600: #1D1D1C;
+}
