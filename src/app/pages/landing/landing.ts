@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideCircleAlert, LucideArrowUpRight } from '@lucide/angular';
 import { PlazaService } from '../../services/plazaService';
-import { TotalOcupacionPorPlantaDTO } from '../../models/dto/plazasOcupadasPorPlantaDto';
+import { TotalOcupacionPorPlantaDTO } from '../../models/dto/plazasDto';
 
 @Component({
   imports: [RouterLink, LucideCircleAlert, LucideArrowUpRight],

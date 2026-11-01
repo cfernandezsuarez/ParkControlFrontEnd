@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { TotalPlazasOcupadasDTO } from '../models/dto/plazasOcupadasDto';
-import { TotalOcupacionPorPlantaDTO } from '../models/dto/plazasOcupadasPorPlantaDto';
+import { TotalPlazasOcupadasDTO, TotalOcupacionPorPlantaDTO } from '../models/dto/plazasDto';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
