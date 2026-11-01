@@ -1,6 +1,8 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LucideCircleAlert, LucideArrowUpRight } from '@lucide/angular';
+import { PlazaService } from '../../services/plazaService';
+import { TotalOcupacionPorPlantaDTO } from '../../models/dto/plazasOcupadasPorPlantaDto';
 
 @Component({
   imports: [RouterLink, LucideCircleAlert, LucideArrowUpRight],
@@ -10,14 +12,51 @@ import { LucideCircleAlert, LucideArrowUpRight } from '@lucide/angular';
   templateUrl: './landing.html',
 })
 export class Landing implements OnInit {
-  plazas = signal<number>(0)
-  plazasMax = signal<number>(200)
-  ocupado = signal<boolean>(false)
-  plantas = signal<number>(3)
+  
+  private plazaService = inject(PlazaService);
+
+  plazas = signal<number>(0);
+  plazasMax = signal<number>(200);
+  ocupado = signal<boolean>(false);
+  plantas = signal<number>(3);
+  ocupacionPorPlanta = signal<TotalOcupacionPorPlantaDTO | null>(null);
+
+  primeraPlantaLibre = computed(() => 
+    this.plazasMax() - (this.ocupacionPorPlanta()?.primera ?? 0)
+  );
+
+  segundaPlantaLibre = computed(() => 
+    this.plazasMax() - (this.ocupacionPorPlanta()?.segunda ?? 0)
+  );
+
+  terceraPlantaLibre = computed(() => 
+    this.plazasMax() - (this.ocupacionPorPlanta()?.tercera ?? 0)
+  );
 
   ngOnInit() {
-    setInterval(() => {
-      this.plazas.update((e) => Math.min(e + 1, this.plazasMax()))
-    }, 1000)
+    this.plazaService.getPlazasOcupadas().subscribe({
+      next: (data) => {
+        this.plazas.set(data)
+      },
+      error: (error) => {
+        console.error('Error al obtener las plazas ocupadas:', error);
+      }
+    })
+    this.plazaService.getPlazasTotales().subscribe({
+      next: (data) => {
+        this.plazasMax.set(data)
+      },
+      error: (error) => {
+        console.error('Error al obtener las plazas totales:', error);
+      }
+    })
+    this.plazaService.getPlazasOcupadasPorPlanta().subscribe({
+      next: (data) => {
+        this.ocupacionPorPlanta.set(data);
+      },
+      error: (error) => {
+        console.error('Error al obtener la ocupación por planta:', error);
+      }
+    })
   }
 }

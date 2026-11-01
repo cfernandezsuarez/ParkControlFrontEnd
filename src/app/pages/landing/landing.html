@@ -40,15 +40,21 @@
           <div class="w-full bg-white p-3 rounded-xl flex flex-col gap-2">
             <div class="flex justify-between items-center">
               <span class="text-lg sm:text-xl font-bold">Planta -1</span>
-              <div class="flex items-center justify-center gap-2 bg-[#E8F7E3] px-2 py-1 rounded-xl">
-                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                <span class="font-bold text-xs sm:text-sm">Alta</span>
+              <div [class.bg-[#E8F7E3]]="primeraPlantaLibre() > 50" [class.bg-[#FFF4E5]]="primeraPlantaLibre() <= 50 && primeraPlantaLibre() > 0" [class.bg-[#FDECEC]]="primeraPlantaLibre() <= 0" class="flex items-center justify-center gap-2 px-2 py-1 rounded-xl">
+                <div [class.bg-green-500]="primeraPlantaLibre() > 50" [class.bg-orange-500]="primeraPlantaLibre() <= 50 && primeraPlantaLibre() > 0" [class.bg-red-500]="primeraPlantaLibre() <= 0" class="w-2 h-2 rounded-full"></div>
+                @if (primeraPlantaLibre() > 50) {
+                  <span class="font-bold text-xs sm:text-sm">Alta</span>
+                } @else if (primeraPlantaLibre() <= 50 && primeraPlantaLibre() > 0) {
+                  <span class="font-bold text-xs sm:text-sm">Media</span>
+                } @else {
+                  <span class="font-bold text-xs sm:text-sm">Completa</span>
+                }
               </div>
             </div>
             <div class="grid grid-cols-4 gap-3">
-              <div class="w-full h-full min-h-[3rem] rounded-lg bg-green-500"></div>
+              <div [class.bg-green-500]="primeraPlantaLibre() > 50" [class.bg-orange-500]="primeraPlantaLibre() <= 50 && primeraPlantaLibre() > 0" [class.bg-red-500]="primeraPlantaLibre() <= 0" class="size-13 aspect-square rounded-lg shrink-0 self-center"></div>
               <div class="col-span-3 flex flex-col justify-center">
-                <span class="uppercase text-lg sm:text-xl font-bold">45 Libres</span>
+                <span class="uppercase text-lg sm:text-xl font-bold">{{ primeraPlantaLibre() }} Libres</span>
                 <p class="text-brand-gray-400 text-[10px] sm:text-xs">30 normales · 10 MR · 5 cargadores</p>
               </div>
             </div>
@@ -57,15 +63,21 @@
           <div class="w-full bg-white p-3 rounded-xl flex flex-col gap-2">
             <div class="flex justify-between items-center">
               <span class="text-lg sm:text-xl font-bold">Planta -2</span>
-              <div class="flex items-center justify-center gap-2 bg-[#FFF4E5] px-2 py-1 rounded-xl">
-                <div class="w-2 h-2 rounded-full bg-orange-500"></div>
-                <span class="font-bold text-xs sm:text-sm">Media</span>
+              <div [class.bg-[#E8F7E3]]="segundaPlantaLibre() > 50" [class.bg-[#FFF4E5]]="segundaPlantaLibre() <= 50 && segundaPlantaLibre() > 0" [class.bg-[#FDECEC]]="segundaPlantaLibre() <= 0" class="flex items-center justify-center gap-2 px-2 py-1 rounded-xl">
+                <div [class.bg-green-500]="segundaPlantaLibre() > 50" [class.bg-orange-500]="segundaPlantaLibre() <= 50 && segundaPlantaLibre() > 0" [class.bg-red-500]="segundaPlantaLibre() <= 0" class="w-2 h-2 rounded-full"></div>
+                @if (segundaPlantaLibre() > 50) {
+                  <span class="font-bold text-xs sm:text-sm">Alta</span>
+                } @else if (segundaPlantaLibre() <= 50 && segundaPlantaLibre() > 0) {
+                  <span class="font-bold text-xs sm:text-sm">Media</span>
+                } @else {
+                  <span class="font-bold text-xs sm:text-sm">Completa</span>
+                }
               </div>
             </div>            
             <div class="grid grid-cols-4 gap-3">
-              <div class="w-full h-full min-h-[3rem] rounded-lg bg-orange-500"></div>
+              <div [class.bg-green-500]="segundaPlantaLibre() > 50" [class.bg-orange-500]="segundaPlantaLibre() <= 50 && segundaPlantaLibre() > 0" [class.bg-red-500]="segundaPlantaLibre() <= 0" class="size-13 aspect-square rounded-lg shrink-0 self-center"></div>
               <div class="col-span-3 flex flex-col justify-center">
-                <span class="uppercase text-lg sm:text-xl font-bold">12 Libres</span>
+                <span class="uppercase text-lg sm:text-xl font-bold">{{ segundaPlantaLibre() }} Libres</span>
                 <p class="text-brand-gray-400 text-[10px] sm:text-xs">8 normales · 2 MR · 2 cargadores</p>
               </div>
             </div>
@@ -74,15 +86,21 @@
           <div class="w-full bg-white p-3 rounded-xl flex flex-col gap-2">
             <div class="flex justify-between items-center">
               <span class="text-lg sm:text-xl font-bold">Planta -3</span>
-              <div class="flex items-center justify-center gap-2 bg-[#FDECEC] px-2 py-1 rounded-xl">
-                <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                <span class="font-bold text-xs sm:text-sm">Completa</span>
+              <div [class.bg-[#E8F7E3]]="terceraPlantaLibre() > 50" [class.bg-[#FFF4E5]]="terceraPlantaLibre() <= 50 && terceraPlantaLibre() > 0" [class.bg-[#FDECEC]]="terceraPlantaLibre() <= 0" class="flex items-center justify-center gap-2 px-2 py-1 rounded-xl">
+                <div [class.bg-green-500]="terceraPlantaLibre() > 50" [class.bg-orange-500]="terceraPlantaLibre() <= 50 && terceraPlantaLibre() > 0" [class.bg-red-500]="terceraPlantaLibre() <= 0" class="w-2 h-2 rounded-full"></div>
+                @if (terceraPlantaLibre() > 50) {
+                  <span class="font-bold text-xs sm:text-sm">Alta</span>
+                } @else if (terceraPlantaLibre() <= 50 && terceraPlantaLibre() > 0) {
+                  <span class="font-bold text-xs sm:text-sm">Media</span>
+                } @else {
+                  <span class="font-bold text-xs sm:text-sm">Completa</span>
+                }
               </div>
             </div>            
             <div class="grid grid-cols-4 gap-3">
-              <div class="w-full h-full min-h-[3rem] rounded-lg bg-red-500"></div>
+              <div [class.bg-green-500]="terceraPlantaLibre() > 50" [class.bg-orange-500]="terceraPlantaLibre() <= 50 && terceraPlantaLibre() > 0" [class.bg-red-500]="terceraPlantaLibre() <= 0" class="size-13 aspect-square rounded-lg shrink-0 self-center"></div>
               <div class="col-span-3 flex flex-col justify-center">
-                <span class="uppercase text-lg sm:text-xl font-bold">0 Libres</span>
+                <span class="uppercase text-lg sm:text-xl font-bold">{{ terceraPlantaLibre() }} Libres</span>
                 <p class="text-brand-gray-400 text-[10px] sm:text-xs">30 normales · 10 MR · 5 cargadores</p>
               </div>
             </div>

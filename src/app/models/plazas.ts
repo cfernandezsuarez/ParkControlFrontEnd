@@ -1,0 +1,12 @@
+import { TotalPlazasOcupadasDTO } from './dto/plazasOcupadasDto';
+import { TipoPlaza, EstadoPlaza } from './enums';
+
+export class Plazas {
+    constructor(
+        readonly id: number,
+        public numero: number,
+        public planta: number,
+        public tipo: TipoPlaza,
+        public estado: EstadoPlaza,
+    ) {}
+}
