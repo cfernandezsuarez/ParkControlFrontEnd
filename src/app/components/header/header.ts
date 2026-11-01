@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideArrowUpRight, LucideMenu } from '@lucide/angular';
 
 @Component({
-  imports: [RouterLink, LucideArrowUpRight, LucideMenu],
+  imports: [RouterLink, RouterLinkActive, LucideArrowUpRight, LucideMenu],
   selector: 'app-header',
   standalone: true,
   styleUrl: './header.css',

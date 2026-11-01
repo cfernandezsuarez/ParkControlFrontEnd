@@ -1,22 +1,103 @@
-<section class="flex flex-1 p-10 gap-5 bg-brand-blue-400">
-  <div class="flex flex-col gap-5 justify-between w-full md:w-1/2">
-    <div class="max-w-fit p-2 bg-white rounded-lg">
-      <span class="uppercase">
+<section class="flex flex-col flex-1 p-10 gap-5 bg-brand-blue-400">
+  <div class="flex flex-col sm:flex-row gap-5 justify-between w-full">
+    <div class="max-w-fit py-2 px-4 bg-white/90 rounded-xl">
+      <span class="flex items-center justify-center gap-3 uppercase font-bold text-base">
+        <div [class.bg-green-500]="plazas() != plazasMax()" [class.bg-red-500]="plazas() == plazasMax()" class="size-2.5 rounded-full"></div>
         {{ plazas() }} / 
         {{ plazasMax() }} 
         Plazas Disponibles
       </span>
     </div>
-    <h1 class="text-5xl font-bold text-white">Aparca sin rodeos en el centro</h1>
-    <p class="text-white text-lg">Consulta disponibilidad por planta y tipo de plaza, revisa la tarifa vigente y accede a promociones validadas por compra sin cerrar el ticket.</p>
-    <div class="flex flex-col p-4 bg-brand-yellow-50 rounded-lg justify-between ">
-      <span class="text-sm uppercase">Tarifa Vigente</span>
-      <span class="text-sm">0,04 €/min</span>
+    <div class="max-w-fit py-2 px-4 bg-white/90 rounded-xl">
+      <span class="uppercase font-bold text-base">
+        {{ plantas() }}
+        Plantas Subterráneas
+      </span>
     </div>
   </div>
-  <div class="w-full md:w-1/2">
+  <div class="flex gap-20">
+    <div class="flex flex-col gap-5 justify-between w-full md:w-1/2">
+      <h1 class="text-5xl font-bold text-white">Aparca sin rodeos en el centro</h1>
+      <p class="text-white text-lg">Consulta disponibilidad por planta y tipo de plaza, revisa la tarifa vigente y accede a promociones validadas por compra sin cerrar el ticket.</p>
+      <div class="flex flex-col p-5 gap-4 bg-brand-yellow-50 rounded-xl justify-between ">
+        <span class="text-sm uppercase font-bold">Tarifa Vigente</span>
+        <span class="text-sm font-bold">0,04 €/min · 5 min cortesía · tope 18 €/24 h · vigente al entrar</span>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <button class="flex items-center gap-2 uppercase text-white font-bold bg-brand-blue-200 rounded-xl py-3 px-5 hover:bg-brand-blue-300 transition-all cursor-pointer">
+          Consultar Importe
+          <svg lucideArrowUpRight class="size-4"></svg>
+        </button>
+        <button routerLink="/precio" class="flex items-center gap-2 uppercase text-brand-blue-200 font-bold border-brand-blue-200 border-2 bg-white rounded-xl py-3 px-5 hover:bg-white/90 transition-all cursor-pointer">
+          Ver Promociones
+        </button>
+      </div>
+    </div>
+    <div class="flex items-center justify-center w-full md:w-1/2">
+      <div class="flex flex-col w-full bg-white/80 rounded-xl gap-2 justify-center p-4">
+        <span class="text-xl uppercase font-bold">Disponibilidad por Planta</span>
+        <div class="flex w-full gap-5">
+          <div class="w-full bg-white p-3 rounded-xl flex flex-col gap-2">
+            <div class="flex justify-between">
+              <span class="text-xl font-bold">Planta -1</span>
+              <div class="flex items-center justify-center gap-2 bg-[#E8F7E3] px-2 py-1 rounded-xl">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                <span class="font-bold text-sm">Alta</span>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="h-full w-1/4 py-2">
+                <div class="w-full h-full rounded-lg bg-green-500"></div>
+              </div>
+              <div class="w-3/4 flex flex-col">
+                <span class="uppercase text-xl font-bold">45 Libres</span>
+                <p class="text-brand-gray-400 text-xs">30 normales · 10 MR · 5 cargadores</p>
+              </div>
+            </div>
+          </div>
 
+          <div class="w-full bg-white p-3 rounded-xl flex flex-col gap-2">
+            <div class="flex justify-between">
+              <span class="text-xl font-bold">Planta -2</span>
+              <div class="flex items-center justify-center gap-2 bg-[#FFF4E5] px-2 py-1 rounded-xl">
+                <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                <span class="font-bold text-sm">Media</span>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="h-full w-1/4 py-2">
+                <div class="w-full h-full rounded-lg bg-orange-500"></div>
+              </div>
+              <div class="w-3/4 flex flex-col">
+                <span class="uppercase text-xl font-bold">12 Libres</span>
+                <p class="text-brand-gray-400 text-xs">8 normales · 2 MR · 2 cargadores</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full bg-white p-3 rounded-xl flex flex-col gap-2">
+            <div class="flex justify-between">
+              <span class="text-xl font-bold">Planta -3</span>
+              <div class="flex items-center justify-center gap-2 bg-[#FDECEC] px-2 py-1 rounded-xl">
+                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                <span class="font-bold text-sm">Completa</span>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="h-full w-1/4 py-2">
+                <div class="w-full h-full rounded-lg bg-red-500"></div>
+              </div>
+              <div class="w-3/4 flex flex-col">
+                <span class="uppercase text-xl font-bold">0 Libres</span>
+                <p class="text-brand-gray-400 text-xs">30 normales · 10 MR · 5 cargadores</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  
 </section>
 <section class="flex flex-col items-center justify-center p-10 gap-5 bg-brand-gray-50">
   <h2 class="text-brand-gray-600 text-3xl text-center font-bold">Ventajas de ParkControl</h2>

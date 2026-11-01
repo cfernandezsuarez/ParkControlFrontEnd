@@ -3,13 +3,13 @@
         <span class="text-2xl font-bold uppercase">ParkControl</span>
     </div>
     <nav class="md:flex gap-10 hidden list-none">
-        <a routerLink="/">Inicio</a>
-        <a routerLink="/precio">Precios</a>
-        <a>Promociones</a>
-        <a>Abonados</a>
+        <a routerLink="/" routerLinkActive="font-bold" [routerLinkActiveOptions]="{exact: true}" class="hover:underline transition-all">Inicio</a>
+        <a routerLink="/precio" routerLinkActive="font-bold" class="hover:underline transition-all">Precios</a>
+        <a routerLink="/promociones" routerLinkActive="font-bold" class="hover:underline transition-all">Promociones</a>
+        <a routerLink="/abonados" routerLinkActive="font-bold" class="hover:underline transition-all">Abonados</a>
     </nav>
     <div>
-        <button class="md:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden">
+        <button class="md:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
             Acceder
             <svg lucideArrowUpRight class="size-5"></svg>
         </button>
@@ -21,7 +21,7 @@
             <a href="#" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Promociones</a>
             <a href="#" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Abonados</a>
 
-            <button class="flex w-full justify-center gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase font-semibold mt-2">
+            <button class="flex w-full justify-center gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase font-semibold mt-2 hover:bg-brand-blue-300 transition-all">
               Acceder
               <svg lucideArrowUpRight class="size-4"></svg>
             </button>
