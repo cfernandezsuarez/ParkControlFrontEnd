@@ -1,18 +1,18 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LucideCircleAlert, LucideArrowUpRight } from '@lucide/angular';
+import { LucideArrowUpRight, LucideCircleGauge, LucideBadgePercent, LucideLockKeyhole, LucideUserGroup } from '@lucide/angular';
 import { PlazaService } from '../../services/plazaService';
 import { TotalOcupacionPorPlantaDTO } from '../../models/dto/plazasDto';
 
 @Component({
-  imports: [RouterLink, LucideCircleAlert, LucideArrowUpRight],
+  imports: [RouterLink, LucideArrowUpRight, LucideCircleGauge, LucideBadgePercent, LucideLockKeyhole, LucideUserGroup],
   selector: 'app-landing',
   standalone: true,
   styleUrl: './landing.css',
   templateUrl: './landing.html',
 })
 export class Landing implements OnInit {
-  
+
   private plazaService = inject(PlazaService);
 
   plazas = signal<number>(0);
@@ -21,15 +21,15 @@ export class Landing implements OnInit {
   plantas = signal<number>(3);
   ocupacionPorPlanta = signal<TotalOcupacionPorPlantaDTO | null>(null);
 
-  primeraPlantaLibre = computed(() => 
+  primeraPlantaLibre = computed(() =>
     this.plazasMax() - (this.ocupacionPorPlanta()?.primera ?? 0)
   );
 
-  segundaPlantaLibre = computed(() => 
+  segundaPlantaLibre = computed(() =>
     this.plazasMax() - (this.ocupacionPorPlanta()?.segunda ?? 0)
   );
 
-  terceraPlantaLibre = computed(() => 
+  terceraPlantaLibre = computed(() =>
     this.plazasMax() - (this.ocupacionPorPlanta()?.tercera ?? 0)
   );
 
