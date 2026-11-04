@@ -10,19 +10,19 @@
       <a routerLink="/abonados" routerLinkActive="font-bold" class="hover:underline transition-all">Abonados</a>
     </nav>
     <div>
-        <button class="md:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
+        <button routerLink="/login" class="md:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
             Acceder
             <svg lucideArrowUpRight class="size-5"></svg>
         </button>
         <svg (click)="openMenu()" lucideMenu class="flex md:hidden size-6 cursor-pointer"></svg>
         @if (menu()) {
           <div class="absolute top-full left-0 w-full bg-white shadow-md md:hidden flex flex-col p-5 gap-4 border-t border-brand-gray-200 z-50">
-            <a routerLink="/" (click)="menu.set(false)" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Inicio</a>
-            <a routerLink="/precio" (click)="menu.set(false)" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Precios</a>
-            <a href="#" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Promociones</a>
-            <a href="#" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Abonados</a>
+            <a routerLink="/" routerLinkActive="font-bold" [routerLinkActiveOptions]="{exact: true}" (click)="menu.set(false)" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Inicio</a>
+            <a routerLink="/precio" routerLinkActive="font-bold" (click)="menu.set(false)" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Precios</a>
+            <a routerLink="/promociones" routerLinkActive="font-bold" (click)="menu.set(false)" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Promociones</a>
+            <a routerLink="/abonados" routerLinkActive="font-bold" (click)="menu.set(false)" class="text-lg font-medium text-brand-gray-600 hover:text-primary">Abonados</a>
 
-            <button class="flex w-full justify-center gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase font-semibold mt-2 hover:bg-brand-blue-300 transition-all">
+            <button routerLink="/login" class="flex w-full justify-center gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase font-semibold mt-2 hover:bg-brand-blue-300 transition-all">
               Acceder
               <svg lucideArrowUpRight class="size-4"></svg>
             </button>
