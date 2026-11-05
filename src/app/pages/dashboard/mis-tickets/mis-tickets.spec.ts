@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PrivateLayout } from './private-layout';
+import { MisTickets } from './mis-tickets';
 
-describe('PrivateLayout', () => {
-  let component: PrivateLayout;
-  let fixture: ComponentFixture<PrivateLayout>;
+describe('MisTickets', () => {
+  let component: MisTickets;
+  let fixture: ComponentFixture<MisTickets>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrivateLayout],
+      imports: [MisTickets],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PrivateLayout);
+    fixture = TestBed.createComponent(MisTickets);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

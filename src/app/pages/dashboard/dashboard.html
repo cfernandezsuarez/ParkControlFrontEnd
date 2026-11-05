@@ -1,51 +1,70 @@
-<div class="flex min-h-[calc(100dvh-80px)]"> <!-- Ajusta 80px a la altura de tu header -->
+<div class="flex h-dvh w-full bg-gray-50">
 
-  <!-- MENÚ LATERAL -->
-  <aside class="w-64 bg-white shadow-md p-4 border-r border-gray-200">
-    <h2 class="text-lg font-bold mb-6 text-gray-800">Panel de Gestión</h2>
+  <!-- ASIDE: Menú lateral a pantalla completa -->
+  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col p-4 shadow-sm">
 
-    <nav class="flex flex-col gap-2">
+    <!-- Logo / Título -->
+    <div class="mb-8 px-2">
+      <h1 class="text-2xl font-bold text-gray-800">ParkControl</h1>
+      <p class="text-sm text-gray-500 mt-1">{{ auth.usuario()?.nombre }}</p>
+    </div>
 
-      <!-- OPCIONES DE ABONADO (todos los roles las ven) -->
-      <a routerLink="/dashboard/mis-tickets" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-        Mis Tickets
+    <!-- Menú dinámico por rol -->
+    <nav class="flex flex-col gap-1 flex-1">
+
+      <!-- Todos -->
+      <a routerLink="/dashboard/inicio" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
+         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+        Inicio
       </a>
-      <a routerLink="/dashboard/mi-abono" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-        Mi Abono
-      </a>
 
-      <!-- OPCIONES DE OPERADOR (OPERADOR y ADMIN) -->
-      @if (auth.tieneRol('OPERADOR', 'ADMIN')) {
-        <div class="mt-4 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">Operaciones</div>
-        <a routerLink="/dashboard/plazas" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-          Gestión de Plazas
+      <!-- ABONADO -->
+      @if (auth.tieneRol('ABONADO')) {
+        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">Mi cuenta</div>
+        <a routerLink="/dashboard/mis-tickets" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+          Mis Tickets
         </a>
-        <a routerLink="/dashboard/tickets" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-          Cobro de Tickets
-        </a>
-        <a routerLink="/dashboard/barrera" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-          Barrera / Entradas
+        <a routerLink="/dashboard/mi-abono" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+          Mi Abono
         </a>
       }
 
-      <!-- OPCIONES DE ADMIN (solo ADMIN) -->
+      <!-- OPERADOR y ADMIN -->
+      @if (auth.tieneRol('OPERADOR', 'ADMIN')) {
+        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">Operativa</div>
+        <a routerLink="/dashboard/tickets" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+          Gestión de Tickets
+        </a>
+        <a routerLink="/dashboard/plazas" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+          Plazas
+        </a>
+      }
+
+      <!-- Solo ADMIN -->
       @if (auth.tieneRol('ADMIN')) {
-        <div class="mt-4 mb-2 text-xs font-bold text-gray-400 uppercase tracking-wider">Administración</div>
-        <a routerLink="/dashboard/abonados" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-          Gestión de Abonados
-        </a>
-        <a routerLink="/dashboard/tarifas" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
-          Tarifas
-        </a>
-        <a routerLink="/dashboard/informes" routerLinkActive="bg-blue-100 text-blue-700 font-semibold" class="p-2 rounded hover:bg-gray-100 transition-colors">
+        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">Administración</div>
+        <a routerLink="/dashboard/informes" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
+           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
           Informes
         </a>
       }
-
     </nav>
+
+    <!-- Botón de cerrar sesión al fondo -->
+    <button (click)="auth.logout()"
+            class="flex items-center gap-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors mt-4">
+      <svg lucideLogOut class="w-5 h-5" ></svg>
+      Cerrar Sesión
+    </button>
+
   </aside>
 
-  <main class="flex-1 p-8 bg-gray-50">
+  <!-- MAIN: Contenido de la ruta hija -->
+  <main class="flex-1 p-8 overflow-y-auto">
     <router-outlet />
   </main>
 

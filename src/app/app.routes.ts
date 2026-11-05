@@ -1,17 +1,23 @@
 import { Routes } from '@angular/router';
-import { Landing } from './pages/landing/landing'
+import { PublicLayout } from './layouts/public-layout/public-layout';
+import { Landing } from './pages/landing/landing';
 import { Precio } from './pages/precio/precio';
-import {AccesoDenegado} from './pages/acceso-denegado/acceso-denegado';
-import {Dashboard} from './pages/dashboard/dashboard';
-import {authGuard} from './guards/authGuard';
-import {rolGuard} from './guards/rolGuard';
-import {Auth} from './pages/auth/auth';
-import {PrivateLayout} from './layouts/private-layout/private-layout';
-import {PublicLayout} from './layouts/public-layout/public-layout';
-import {Abonados} from './pages/abonados/abonados';
+import { AccesoDenegado } from './pages/acceso-denegado/acceso-denegado';
+import { Auth } from './pages/auth/auth';
+import { Dashboard } from './pages/dashboard/dashboard';
+import { Inicio } from './pages/dashboard/inicio/inicio';
+import { MisTickets } from './pages/dashboard/mis-tickets/mis-tickets';
+import { MiAbono } from './pages/dashboard/mi-abono/mi-abono';
+import { Tickets } from './pages/dashboard/tickets/tickets';
+import { Plazas } from './pages/dashboard/plazas/plazas';
+import { Informes } from './pages/dashboard/informes/informes';
+import { authGuard } from './guards/authGuard';
+import { rolGuard } from './guards/rolGuard';
 
 export const routes: Routes = [
-  // 1. ZONA PÚBLICA
+  // ==========================================
+  // 1. ZONA PÚBLICA (envuelta en PublicLayout)
+  // ==========================================
   {
     path: '',
     component: PublicLayout,
@@ -19,83 +25,60 @@ export const routes: Routes = [
       { path: '', component: Landing },
       { path: 'precio', component: Precio },
       { path: 'login', component: Auth },
-      { path: 'acceso-denegado', component: AccesoDenegado }
-    ]
+      { path: 'acceso-denegado', component: AccesoDenegado },
+    ],
   },
 
-  // 2. ZONA PRIVADA
+  // ==========================================
+  // 2. ZONA PRIVADA (Dashboard como contenedor)
+  // ==========================================
   {
-    path: '',
-    component: PrivateLayout,
-    canActivate: [authGuard], // Protege toda la zona privada
+    path: 'dashboard',
+    component: Dashboard,
+    canActivate: [authGuard, rolGuard],
+    data: { roles: ['ADMIN', 'OPERADOR', 'ABONADO'] },
     children: [
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+      { path: 'inicio', component: Inicio },
+
+      // ABONADO
       {
-        path: 'dashboard',
-        component: Dashboard,
-        // Todos los roles pueden acceder al contenedor
+        path: 'mis-tickets',
+        component: MisTickets,
         canActivate: [rolGuard],
-        data: { roles: ['ADMIN', 'OPERADOR', 'ABONADO'] },
-        children: [
-          // Redirección por defecto según el rol (la gestionamos en el componente o con un guard)
-          { path: '', redirectTo: 'mis-tickets', pathMatch: 'full' },
+        data: { roles: ['ABONADO'] },
+      },
+      {
+        path: 'mi-abono',
+        component: MiAbono,
+        canActivate: [rolGuard],
+        data: { roles: ['ABONADO'] },
+      },
 
-          // --- RUTAS DE ABONADO (todos pueden verlas, aunque el menú solo se las muestra a ellos) ---
-          {
-            path: 'mis-tickets',
-            component: MisTickets,
-            canActivate: [rolGuard],
-            data: { roles: ['ADMIN', 'OPERADOR', 'ABONADO'] } // Por si quieres que un admin vea los tickets de un abonado
-          },
-          {
-            path: 'mi-abono',
-            component: MiAbono,
-            canActivate: [rolGuard],
-            data: { roles: ['ABONADO'] } // Solo el abonado ve su propio abono
-          },
+      // OPERADOR y ADMIN
+      {
+        path: 'tickets',
+        component: Tickets,
+        canActivate: [rolGuard],
+        data: { roles: ['OPERADOR', 'ADMIN'] },
+      },
+      {
+        path: 'plazas',
+        component: Plazas,
+        canActivate: [rolGuard],
+        data: { roles: ['OPERADOR', 'ADMIN'] },
+      },
 
-          // --- RUTAS DE OPERADOR (OPERADOR y ADMIN) ---
-          {
-            path: 'plazas',
-            component: Plazas,
-            canActivate: [rolGuard],
-            data: { roles: ['OPERADOR', 'ADMIN'] }
-          },
-          {
-            path: 'tickets',
-            component: Tickets,
-            canActivate: [rolGuard],
-            data: { roles: ['OPERADOR', 'ADMIN'] }
-          },
-          {
-            path: 'barrera',
-            component: Barrera,
-            canActivate: [rolGuard],
-            data: { roles: ['OPERADOR', 'ADMIN'] }
-          },
-
-          // --- RUTAS DE ADMIN ---
-          {
-            path: 'abonados',
-            component: Abonados,
-            canActivate: [rolGuard],
-            data: { roles: ['ADMIN'] }
-          },
-          {
-            path: 'tarifas',
-            component: Tarifas,
-            canActivate: [rolGuard],
-            data: { roles: ['ADMIN'] }
-          },
-          {
-            path: 'informes',
-            component: Informes,
-            canActivate: [rolGuard],
-            data: { roles: ['ADMIN'] }
-          }
-        ]
-      }
-    ]
+      // ADMIN
+      {
+        path: 'informes',
+        component: Informes,
+        canActivate: [rolGuard],
+        data: { roles: ['ADMIN'] },
+      },
+    ],
   },
 
-  { path: '**', redirectTo: '' }
+  // Ruta comodín
+  { path: '**', redirectTo: '' },
 ];
