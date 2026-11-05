@@ -1,0 +1,18 @@
+<section class="flex flex-1 items-center justify-center bg-brand-gray-50">
+  <div class="flex flex-col p-8 gap-3 bg-white rounded-2xl shadow-lg w-full max-w-md">
+    <span class="text-xs text-brand-blue-400 font-bold uppercase">Bienvenido de nuevo</span>
+    <h1 class="text-3xl font-bold">Inicia sesión</h1>
+    <p class="text-brand-gray-400 text-sm">Accede a tu cuenta para consultar tus estancias y tu abono.</p>
+    <form class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label for="email">Correo electrónico</label>
+        <input #email type="email" id="email" placeholder="Correo electrónico" class="border border-brand-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-200">
+      </div>
+      <div class="flex flex-col gap-1">
+        <label for="password">Contraseña</label>
+        <input #passwd type="password" id="password" placeholder="Contraseña" class="border border-brand-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-200">
+      </div>
+      <button type="submit" class="bg-brand-blue-200 text-white py-3 cursor-pointer rounded-lg hover:bg-brand-blue-300 transition-all">Iniciar sesión</button>
+    </form>
+  </div>
+</section>
