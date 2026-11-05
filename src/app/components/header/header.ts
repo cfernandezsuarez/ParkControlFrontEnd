@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideArrowUpRight, LucideMenu } from '@lucide/angular';
+import {AuthService} from '../../services/authService';
 
 @Component({
   imports: [RouterLink, RouterLinkActive, LucideArrowUpRight, LucideMenu],
@@ -10,6 +11,7 @@ import { LucideArrowUpRight, LucideMenu } from '@lucide/angular';
   templateUrl: './header.html',
 })
 export class Header {
+  protected auth = inject(AuthService)
   menu = signal<boolean>(false)
 
   openMenu() {

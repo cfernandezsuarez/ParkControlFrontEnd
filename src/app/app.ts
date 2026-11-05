@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
+import {AuthService} from './services/authService';
 
 @Component({
   imports: [RouterOutlet, Header, Footer],
@@ -10,5 +11,6 @@ import { Footer } from './components/footer/footer';
   templateUrl: './app.html',
 })
 export class App {
+  protected auth = inject(AuthService);
   protected readonly title = signal('ParkControl');
 }

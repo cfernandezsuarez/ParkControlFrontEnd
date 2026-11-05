@@ -10,6 +10,6 @@ export interface LoginResponse {
 }
 
 export interface UsuarioSession {
-  email: string;
+  nombre: string;
   rol: Rol;
 }

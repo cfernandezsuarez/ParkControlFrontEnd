@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
+import {AuthService} from '../../services/authService';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 
 @Component({
-  imports: [],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   selector: 'app-dashboard',
+  standalone: true,
   styleUrl: './dashboard.css',
   templateUrl: './dashboard.html',
 })
-export class Dashboard {}
+export class Dashboard {
+  protected auth = inject(AuthService);
+}

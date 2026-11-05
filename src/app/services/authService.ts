@@ -49,6 +49,6 @@ export class AuthService {
       return null;
     }
 
-    return { email: payload.sub, rol: payload.rol }
+    return { nombre: payload.sub, rol: payload.rol }
   }
 }
