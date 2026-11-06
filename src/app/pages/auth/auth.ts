@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {Login} from '../../components/login/login';
 import {Register} from '../../components/register/register';
 
@@ -11,4 +11,6 @@ import {Register} from '../../components/register/register';
   styleUrl: './auth.css',
   templateUrl: './auth.html',
 })
-export class Auth {}
+export class Auth {
+  vista = signal<'login' | 'register'>('login');
+}

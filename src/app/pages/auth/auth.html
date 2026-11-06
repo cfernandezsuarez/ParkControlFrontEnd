@@ -1,5 +1,8 @@
+@if (vista() === 'login') {
+  <app-login (irAlRegister)="vista.set('register')" )></app-login>
+}
 
-<app-login class="flex"></app-login>
-
-<app-register class="hidden"></app-register>
+@if (vista() === 'register') {
+  <app-register (irAlLogin)="vista.set('login')" )></app-register>
+}
 

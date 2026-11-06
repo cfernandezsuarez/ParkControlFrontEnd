@@ -17,4 +17,8 @@ export class Header {
   openMenu() {
     this.menu.update(e => !e)
   }
+
+  get rutaDestino(): string {
+    return this.auth.autenticado() ? '/dashboard' : '/login';
+  }
 }
