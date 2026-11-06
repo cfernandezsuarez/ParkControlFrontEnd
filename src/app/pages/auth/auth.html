@@ -1,8 +1,9 @@
-@if (vista() === 'login') {
-  <app-login (irAlRegister)="vista.set('register')" )></app-login>
-}
+<section class="flex flex-1 items-center justify-center p-5 md:p-15 min-h-dvh bg-brand-gray-50">
+  @if (vista() === 'login') {
+    <app-login (irAlRegister)="vista.set('register')" )></app-login>
+  }
 
-@if (vista() === 'register') {
-  <app-register (irAlLogin)="vista.set('login')" )></app-register>
-}
-
+  @if (vista() === 'register') {
+    <app-register (irAlLogin)="vista.set('login')" )></app-register>
+  }
+</section>

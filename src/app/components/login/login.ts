@@ -22,7 +22,7 @@ export class Login {
 
   entrar(): void {
     this.auth.login({ nombre: this.nombre, password: this.password }).subscribe({
-      next: () => this.router.navigate(['/dashboard']), // Ir al inicio tras login
+      next: () => this.router.navigate(['/dashboard']),
       error: () => this.error.set('Usuario o contraseña incorrectos')
     });
   }

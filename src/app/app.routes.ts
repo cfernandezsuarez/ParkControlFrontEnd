@@ -15,9 +15,7 @@ import { authGuard } from './guards/authGuard';
 import { rolGuard } from './guards/rolGuard';
 
 export const routes: Routes = [
-  // ==========================================
-  // 1. ZONA PÚBLICA (envuelta en PublicLayout)
-  // ==========================================
+  // 1. ZONA PÚBLICA
   {
     path: '',
     component: PublicLayout,
@@ -29,9 +27,7 @@ export const routes: Routes = [
     ],
   },
 
-  // ==========================================
-  // 2. ZONA PRIVADA (Dashboard como contenedor)
-  // ==========================================
+  // 2. ZONA PRIVADA
   {
     path: 'dashboard',
     component: Dashboard,
@@ -79,6 +75,5 @@ export const routes: Routes = [
     ],
   },
 
-  // Ruta comodín
   { path: '**', redirectTo: '' },
 ];

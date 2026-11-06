@@ -9,6 +9,11 @@ export interface LoginResponse {
   token: string;
 }
 
+export interface RegisterRequest {
+  nombre: string;
+  password: string;
+}
+
 export interface UsuarioSession {
   nombre: string;
   rol: Rol;

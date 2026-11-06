@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { LoginRequest, LoginResponse, Rol, UsuarioSession } from '../models/dto/authDto';
+import { LoginRequest, LoginResponse, RegisterRequest, UsuarioSession } from '../models/dto/authDto';
 import { decodificarToken } from '../utils/jwt';
 
 @Injectable({ providedIn: 'root' })
@@ -23,6 +23,10 @@ export class AuthService {
         this.usuario.set(this.leerSesion())
       })
     )
+  }
+
+  register(datos: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${environment.apiUrl}/auth/register`, datos);
   }
 
   logout() {

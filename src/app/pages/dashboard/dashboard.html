@@ -1,62 +1,102 @@
 <div class="flex h-dvh w-full bg-gray-50">
 
   <!-- ASIDE: Menú lateral a pantalla completa -->
-  <aside class="w-64 bg-white border-r border-gray-200 flex flex-col p-4 shadow-sm">
+  <aside class="w-64 bg-brand-blue-600 text-white border-r border-gray-200 flex flex-col p-4 shadow-sm">
 
     <!-- Logo / Título -->
     <div class="mb-8 px-2">
-      <h1 class="text-2xl font-bold text-gray-800">ParkControl</h1>
-      <p class="text-sm text-gray-500 mt-1">{{ auth.usuario()?.nombre }}</p>
+      <div class="flex items-center gap-3">
+        <img src="/Logo.png" class="bg-white rounded-full size-10" draggable="false"/>
+        <h1 class="text-2xl font-bold">ParkControl</h1>
+      </div>
     </div>
 
     <!-- Menú dinámico por rol -->
     <nav class="flex flex-col gap-1 flex-1">
 
       <!-- Todos -->
-      <a routerLink="/dashboard/inicio" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-         class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+      <a
+        routerLink="/dashboard/inicio"
+        routerLinkActive="bg-brand-blue-300 text-white font-semibold"
+        class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/80 transition-colors hover:bg-brand-blue-500 hover:text-white"
+      >
         Inicio
       </a>
 
       <!-- ABONADO -->
       @if (auth.tieneRol('ABONADO')) {
-        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">Mi cuenta</div>
-        <a routerLink="/dashboard/mis-tickets" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
-          Mis Tickets
-        </a>
-        <a routerLink="/dashboard/mi-abono" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
-          Mi Abono
-        </a>
+        <div class="mt-4 mb-1 px-3">
+          <span class="text-xs font-bold text-brand-blue-200 uppercase tracking-wider">Mi cuenta</span>
+        </div>
+
+        <nav class="flex flex-col gap-1">
+          <a
+            routerLink="/dashboard/mis-tickets"
+            routerLinkActive="bg-brand-blue-300 text-white font-semibold"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/80 transition-colors hover:bg-brand-blue-500 hover:text-white"
+          >
+            Mis Tickets
+          </a>
+          <a
+            routerLink="/dashboard/mi-abono"
+            routerLinkActive="bg-brand-blue-300 text-white font-semibold"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/80 transition-colors hover:bg-brand-blue-500 hover:text-white"
+          >
+            Mi Abono
+          </a>
+        </nav>
       }
 
       <!-- OPERADOR y ADMIN -->
       @if (auth.tieneRol('OPERADOR', 'ADMIN')) {
-        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">Operativa</div>
-        <a routerLink="/dashboard/tickets" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">
+          <span class="text-xs font-bold text-brand-blue-200 uppercase tracking-wider">Operativa</span>
+        </div>
+        <a
+          routerLink="/dashboard/tickets"
+          routerLinkActive="bg-brand-blue-300 text-white font-semibold"
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/80 transition-colors hover:bg-brand-blue-500 hover:text-white"
+        >
           Gestión de Tickets
         </a>
-        <a routerLink="/dashboard/plazas" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+        <a
+          routerLink="/dashboard/plazas"
+          routerLinkActive="bg-brand-blue-300 text-white font-semibold"
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/80 transition-colors hover:bg-brand-blue-500 hover:text-white">
           Plazas
         </a>
       }
 
       <!-- Solo ADMIN -->
       @if (auth.tieneRol('ADMIN')) {
-        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">Administración</div>
-        <a routerLink="/dashboard/informes" routerLinkActive="bg-blue-50 text-blue-600 font-semibold"
-           class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+        <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">
+          <span>Administración</span>
+        </div>
+        <a
+          routerLink="/dashboard/informes"
+          routerLinkActive="bg-brand-blue-300 text-white font-semibold"
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-white/80 transition-colors hover:bg-brand-blue-500 hover:text-white"
+        >
           Informes
         </a>
       }
+      <div class="flex flex-col">
+        <span class="capitalize text-white mt-5">
+          {{ auth.usuario()?.nombre }}
+        </span>
+        <div class="flex items-center text-sm text-white/80 gap-2">
+          <span class="capitalize">
+            {{ auth.usuario()?.rol }}
+          </span>
+          <span>·</span>
+          <span>ParkControl</span>
+        </div>
+      </div>
     </nav>
 
     <!-- Botón de cerrar sesión al fondo -->
     <button (click)="auth.logout()"
-            class="flex items-center cursor-pointer gap-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors mt-4">
+            class="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 transition-colors hover:bg-red-500/90 hover:text-white cursor-pointer">
       <svg lucideLogOut class="w-5 h-5" ></svg>
       Cerrar Sesión
     </button>
