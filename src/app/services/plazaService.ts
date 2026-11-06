@@ -15,17 +15,21 @@ export class PlazaService {
     private apiUrl = environment.apiUrl
 
     getPlazasTotales(): Observable<number> {
-        return this.http.get<number>(`${this.apiUrl}/plazas/total`)
+      return this.http.get<number>(`${this.apiUrl}/plazas/total`)
+    }
+
+    getPlazasBloqueadas(): Observable<number> {
+      return this.http.get<number>(`${this.apiUrl}/plazas/total/bloqueada`)
     }
 
     getPlazasOcupadas(): Observable<number> {
-        return this.http.get<TotalPlazasOcupadasDTO[]>(`${this.apiUrl}/plazas/ocupadas/total`).pipe(
-            map((data) => data[0]?.total || 0)
-        )
+      return this.http.get<TotalPlazasOcupadasDTO[]>(`${this.apiUrl}/plazas/ocupadas/total`).pipe(
+          map((data) => data[0]?.total || 0)
+      )
     }
 
     getPlazasOcupadasPorPlanta(): Observable<TotalOcupacionPorPlantaDTO> {
-        return this.http.get<TotalOcupacionPorPlantaDTO>(`${this.apiUrl}/plazas/ocupadas/planta`)
+      return this.http.get<TotalOcupacionPorPlantaDTO>(`${this.apiUrl}/plazas/ocupadas/planta`)
     }
 
 }
