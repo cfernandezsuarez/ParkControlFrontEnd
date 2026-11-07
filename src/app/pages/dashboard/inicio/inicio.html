@@ -3,19 +3,81 @@
     <span class="text-brand-blue-300 text-sm font-bold">CONSULTA PÚBLICA / PARKCONTROL</span>
     <h1 class="text-3xl">Disponibilidad detallada</h1>
   </div>
-  <div class="w-full flex flex-col">
-    <div class="flex flex-1 gap-5 justify-between">
+  <div class="w-full flex gap-5 flex-col">
+    <div class="flex flex-wrap flex-1 gap-5 justify-between">
       <div class="flex flex-1 flex-col gap-3 p-5 bg-brand-blue-400 rounded-xl justify-center text-white">
         <span>Plazas libres</span>
-        <span class="text-4xl">{{ plazasMax() - plazas() }} / {{ plazasMax() }}</span>
+        <span class="text-4xl">
+          @if (cargando()) {
+            ...
+          }
+          @if (!cargando()) {
+            {{ plazasMax() - plazas() }}
+          }
+          / {{ plazasMax() }}
+        </span>
       </div>
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center text-white">
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
         <span class="text-brand-gray-400">Ocupadas</span>
-        <span class="text-4xl text-black">{{ plazas() }} / {{ plazasMax() }}</span>
+        <span class="text-4xl text-black">
+          @if (cargando()) {
+            ...
+          }
+          @if (!cargando()) {
+            {{ plazas() }}
+          }
+          / {{ plazasMax() }}
+        </span>
       </div>
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center text-white">
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
         <span class="text-brand-gray-400">Mantenimiento</span>
-        <span class="text-4xl text-black">{{ plazasBloqueadas() }}</span>
+        <span class="text-4xl text-black">
+          @if (cargando()) {
+            ...
+          }
+          @if (!cargando()) {
+            {{ plazasBloqueadas() }}
+          }
+        </span>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap flex-1 gap-5 justify-between">
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-centere">
+        <span class="text-2xl text-brand-gray-400">Panta -1</span>
+        <span class="text-4xl text-black">
+          @if (cargando()) {
+            ...
+          }
+          @if (!cargando()) {
+            {{ primeraPlantaLibre() }}
+          }
+          libres
+        </span>
+      </div>
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
+        <span class="text-2xl text-brand-gray-400">Planta -2</span>
+        <span class="text-4xl text-black">
+          @if (cargando()) {
+            ...
+          }
+          @if (!cargando()) {
+            {{ segundaPlantaLibre() }}
+          }
+          libres
+        </span>
+      </div>
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
+        <span class="text-2xl text-brand-gray-400">Planta -3</span>
+        <span class="text-4xl text-black">
+          @if (cargando()) {
+            ...
+          }
+          @if (!cargando()) {
+            {{ terceraPlantaLibre() }}
+          }
+          libres
+        </span>
       </div>
     </div>
   </div>

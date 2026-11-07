@@ -18,12 +18,27 @@ export class Login {
 
   nombre = '';
   password = '';
+  cargando = signal<boolean>(false);
   error = signal<string | null>(null);
 
   entrar(): void {
+    if (!this.nombre.trim() || !this.password) {
+      this.error.set('El nombre y la contraseña son obligatorios')
+      return;
+    }
+
+    this.cargando.set(true)
+    this.error.set(null)
+
     this.auth.login({ nombre: this.nombre, password: this.password }).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: () => this.error.set('Usuario o contraseña incorrectos')
+      next: () => {
+        this.cargando.set(false)
+        this.router.navigate(['/dashboard'])
+      },
+      error: () => {
+        this.cargando.set(false)
+        this.error.set('Usuario o contraseña incorrectos')
+      }
     });
   }
 }

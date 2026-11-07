@@ -12,7 +12,14 @@
       <input #passwd [(ngModel)]="password" name="password" type="password" id="password" placeholder="Contraseña" class="border border-brand-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-200">
     </div>
     <span class="text-red-600">{{ error() }}</span>
-    <button type="submit" class="bg-brand-blue-200 text-white py-3 cursor-pointer rounded-lg hover:bg-brand-blue-300 transition-all">Iniciar sesión</button>
+    <button type="submit" class="bg-brand-blue-200 text-white py-3 cursor-pointer rounded-lg hover:bg-brand-blue-300 transition-all">
+      @if (cargando()) {
+        Entrando...
+      }
+      @if (!cargando()) {
+        Iniciar sesión
+      }
+    </button>
     <div class="flex justify-between">
       <span>¿No tienes cuenta?</span>
       <span (click)="irAlRegister.emit()" class="cursor-pointer text-brand-blue-300 underline hover:no-underline">Regístrate</span>
