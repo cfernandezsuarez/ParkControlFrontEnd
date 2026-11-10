@@ -34,4 +34,8 @@ export class PlazaService {
     getPlazasPorPlanta(planta: number): Observable<PlazaDTO[]> {
       return this.http.get<PlazaDTO[]>(`${this.apiUrl}/plazas/planta/${planta}`);
     }
+
+    cambiarEstadoPlaza(id: number): Observable<string> {
+      return this.http.patch<string>(`${this.apiUrl}/plazas/${id}/estado`, {});
+    }
 }

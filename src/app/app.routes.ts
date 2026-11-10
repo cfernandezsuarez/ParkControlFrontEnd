@@ -7,12 +7,13 @@ import { Auth } from './pages/auth/auth';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Inicio } from './pages/dashboard/inicio/inicio';
 import { MisTickets } from './pages/dashboard/mis-tickets/mis-tickets';
-import { MiAbono } from './pages/dashboard/mi-abono/mi-abono';
+import { Tarifa } from './pages/dashboard/tarifa/tarifa';
 import { Tickets } from './pages/dashboard/tickets/tickets';
 import { Plazas } from './pages/dashboard/plazas/plazas';
 import { Informes } from './pages/dashboard/informes/informes';
 import { authGuard } from './guards/authGuard';
 import { rolGuard } from './guards/rolGuard';
+import { Entrada } from './pages/dashboard/entrada/entrada';
 
 export const routes: Routes = [
   // 1. ZONA PÚBLICA
@@ -45,13 +46,19 @@ export const routes: Routes = [
         data: { roles: ['ABONADO'] },
       },
       {
-        path: 'mi-abono',
-        component: MiAbono,
+        path: 'tarifa',
+        component: Tarifa,
         canActivate: [rolGuard],
         data: { roles: ['ABONADO'] },
       },
 
       // OPERADOR y ADMIN
+      {
+        path: 'entrada',
+        component: Entrada,
+        canActivate: [rolGuard],
+        data: { roles: ['OPERADOR', 'ADMIN'] },
+      },
       {
         path: 'tickets',
         component: Tickets,

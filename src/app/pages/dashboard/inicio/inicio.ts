@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './inicio.html',
 })
 export class Inicio implements OnInit {
+
   private plazaService = inject(PlazaService);
 
   plazas = signal<number>(0);
@@ -50,15 +51,9 @@ export class Inicio implements OnInit {
   terceraPlantaOcupadas = computed(() => this.plazasOcupacion()?.planta?.tercera?.ocupadas ?? 0);
   terceraPlantaBloqueadas = computed(() => this.plazasOcupacion()?.planta?.tercera?.bloqueadas ?? 0);
 
-  plazasPlantaMenos1 = signal<PlazaDTO[]>([]);
-
-  plantaSeleccionada = signal<number>(-1);
-  plazasDeLaPlanta = signal<PlazaDTO[]>([]);
-
   ngOnInit() {
     this.cargando.set(true);
     this.error.set(null);
-    this.cargarPlazasDePlanta(-1);
 
     forkJoin({
       plazasOcupacion: this.plazaService.getPlazasOcupacion(),
@@ -67,7 +62,6 @@ export class Inicio implements OnInit {
       plantaCeroMax: this.plazaService.getPlazasTotalesPorPlanta(0),
       plantaMenos1Max: this.plazaService.getPlazasTotalesPorPlanta(-1),
       plantaMenos2Max: this.plazaService.getPlazasTotalesPorPlanta(-2),
-      plazasPlantaMenos1: this.plazaService.getPlazasPorPlanta(-1),
     }).subscribe({
       next: (datos) => {
         this.plazas.set(datos.plazasOcupacion.total?.ocupadas ?? 0);
@@ -78,32 +72,11 @@ export class Inicio implements OnInit {
         this.segundaPlantaMax.set(datos.plantaMenos1Max);
         this.terceraPlantaMax.set(datos.plantaMenos2Max);
         this.cargando.set(false);
-        this.plazasPlantaMenos1.set(datos.plazasPlantaMenos1);
       },
       error: () => {
         this.cargando.set(false);
         this.error.set('Error al cargar los datos de plazas');
       },
-    });
-  }
-
-  cambiarPlanta(plantaVista: number) {
-    this.plantaSeleccionada.set(plantaVista);
-    const plantaBd = this.plantaVistaABd(plantaVista);
-    this.cargarPlazasDePlanta(plantaBd);
-  }
-
-  private plantaVistaABd(vista: number): number {
-    if (vista === -1) return 0;
-    if (vista === -2) return -1;
-    if (vista === -3) return -2;
-    return vista;
-  }
-
-  private cargarPlazasDePlanta(planta: number) {
-    this.plazaService.getPlazasPorPlanta(planta).subscribe({
-      next: (plazas) => this.plazasDeLaPlanta.set(plazas),
-      error: () => this.error.set('Error al cargar las plazas de la planta')
     });
   }
 }

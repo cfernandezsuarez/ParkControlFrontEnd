@@ -1,1 +1,86 @@
-<p>plazas works!</p>
+<section class="w-full h-full flex flex-col gap-5">
+  <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex gap-2">
+      <button
+        (click)="cambiarPlanta(-1)"
+        [class.bg-brand-blue-500]="plantaSeleccionada() === -1"
+        [class.text-white]="plantaSeleccionada() === -1"
+        [class.bg-gray-100]="plantaSeleccionada() !== -1"
+        [class.text-gray-600]="plantaSeleccionada() !== -1"
+        class="px-4 py-2 rounded-lg font-medium transition-colors hover:bg-brand-blue-400 hover:text-white cursor-pointer"
+      >
+        Planta -1
+      </button>
+
+      <button
+        (click)="cambiarPlanta(-2)"
+        [class.bg-brand-blue-500]="plantaSeleccionada() === -2"
+        [class.text-white]="plantaSeleccionada() === -2"
+        [class.bg-gray-100]="plantaSeleccionada() !== -2"
+        [class.text-gray-600]="plantaSeleccionada() !== -2"
+        class="px-4 py-2 rounded-lg font-medium transition-colors hover:bg-brand-blue-400 hover:text-white cursor-pointer"
+      >
+        Planta -2
+      </button>
+
+      <button
+        (click)="cambiarPlanta(-3)"
+        [class.bg-brand-blue-500]="plantaSeleccionada() === -3"
+        [class.text-white]="plantaSeleccionada() === -3"
+        [class.bg-gray-100]="plantaSeleccionada() !== -3"
+        [class.text-gray-600]="plantaSeleccionada() !== -3"
+        class="px-4 py-2 rounded-lg font-medium transition-colors hover:bg-brand-blue-400 hover:text-white cursor-pointer"
+      >
+        Planta -3
+      </button>
+    </div>
+
+    <h2 class="text-2xl">Esquema de plazas · planta {{ plantaSeleccionada() }}</h2>
+
+    <div class="flex gap-4 text-sm text-gray-600">
+    <span class="flex items-center gap-2">
+      <span class="w-4 h-4 rounded bg-green-100 border border-green-300"></span> Libre
+    </span>
+      <span class="flex items-center gap-2">
+      <span class="w-4 h-4 rounded bg-red-200 border border-red-300"></span> Ocupada
+    </span>
+      <span class="flex items-center gap-2">
+      <span class="w-4 h-4 rounded bg-yellow-100 border border-yellow-300"></span> Mantenimiento
+    </span>
+    </div>
+
+    <div class="grid grid-cols-14 gap-2 bg-gray-50 p-4 rounded-xl">
+      @for (plaza of plazasDeLaPlanta(); track plaza.id) {
+        <div
+          [class.bg-green-100]="plaza.estado === 'LIBRE'"
+          [class.text-green-800]="plaza.estado === 'LIBRE'"
+          [class.border-green-300]="plaza.estado === 'LIBRE'"
+
+          [class.bg-red-200]="plaza.estado === 'OCUPADA'"
+          [class.text-red-900]="plaza.estado === 'OCUPADA'"
+          [class.border-red-300]="plaza.estado === 'OCUPADA'"
+
+          [class.bg-yellow-100]="plaza.estado === 'BLOQUEADA'"
+          [class.text-yellow-800]="plaza.estado === 'BLOQUEADA'"
+          [class.border-yellow-300]="plaza.estado === 'BLOQUEADA'"
+
+          class="flex flex-col items-center justify-center p-1 rounded border text-xs font-bold cursor-pointer"
+          (click)="bloquearDesbloquear(plaza.id)"
+        >
+          <span>{{ ($index + 1).toString().padStart(3, '0') }}</span>
+            <span class="text-[10px] font-normal opacity-70">
+            @if (plaza.tipo === 'NORMAL') { N }
+            @else if (plaza.tipo === 'PMR') { MR }
+            @else if (plaza.tipo === 'ELECTRICA') { EV }
+          </span>
+        </div>
+      } @empty {
+        <p class="col-span-14 text-center text-gray-500 py-4">Cargando plazas...</p>
+      }
+    </div>
+
+    <span class="text-xs text-gray-500">
+      N: normal · MR: movilidad reducida · EV: cargador eléctrico
+    </span>
+  </div>
+</section>
