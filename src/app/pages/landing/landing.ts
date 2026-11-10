@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { LucideArrowUpRight, LucideCircleGauge, LucideBadgePercent, LucideLockKeyhole, LucideUserGroup } from '@lucide/angular';
 import { PlazaService } from '../../services/plazaService';
-import { TotalOcupacionPorPlantaDTO } from '../../models/dto/plazasDto';
+import { PlazasOcupacionDTO } from '../../models/dto/plazasDto';
 
 @Component({
   imports: [
@@ -28,31 +28,30 @@ export class Landing implements OnInit {
   segundaPlantaMax = signal<number>(200);
   terceraPlantaMax = signal<number>(200);
   plantas = signal<number>(3);
-  ocupacionPorPlanta = signal<TotalOcupacionPorPlantaDTO | null>(null);
+  plazasOcupacion = signal<PlazasOcupacionDTO | null>(null);
 
   error = signal<string | null>(null);
   cargando = signal<boolean>(false);
 
-  primeraPlantaLibre = computed(() => this.primeraPlantaMax() - (this.ocupacionPorPlanta()?.primera ?? 0));
-  segundaPlantaLibre = computed(() => this.segundaPlantaMax() - (this.ocupacionPorPlanta()?.segunda ?? 0));
-  terceraPlantaLibre = computed(() => this.terceraPlantaMax() - (this.ocupacionPorPlanta()?.tercera ?? 0));
+  primeraPlantaLibre = computed(() => this.plazasOcupacion()?.planta?.primera?.libres ?? 0);
+  segundaPlantaLibre = computed(() => this.plazasOcupacion()?.planta?.segunda?.libres ?? 0);
+  terceraPlantaLibre = computed(() => this.plazasOcupacion()?.planta?.tercera?.libres ?? 0);
 
   ngOnInit() {
     this.cargando.set(true)
     this.error.set(null)
 
     forkJoin({
-      plazasOcupadas: this.plazaService.getPlazasOcupadas(),
+      plazasOcupacion: this.plazaService.getPlazasOcupacion(),
       plazasTotales: this.plazaService.getPlazasTotales(),
-      ocupacionPorPlanta: this.plazaService.getPlazasOcupadasPorPlanta(),
       planta0Max: this.plazaService.getPlazasTotalesPorPlanta(0),
       plantaMenos1Max: this.plazaService.getPlazasTotalesPorPlanta(-1),
       plantaMenos2Max: this.plazaService.getPlazasTotalesPorPlanta(-2),
     }).subscribe({
       next: (datos) => {
-        this.plazas.set(datos.plazasOcupadas)
+        this.plazas.set(datos.plazasOcupacion.total.ocupadas)
         this.plazasMax.set(datos.plazasTotales)
-        this.ocupacionPorPlanta.set(datos.ocupacionPorPlanta)
+        this.plazasOcupacion.set(datos.plazasOcupacion)
         this.primeraPlantaMax.set(datos.planta0Max)
         this.segundaPlantaMax.set(datos.plantaMenos1Max)
         this.terceraPlantaMax.set(datos.plantaMenos2Max)

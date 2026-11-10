@@ -1,6 +1,6 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
-import {PlazaService} from '../../../services/plazaService';
-import { TotalOcupacionPorPlantaDTO } from '../../../models/dto/plazasDto';
+import { PlazaService } from '../../../services/plazaService';
+import { PlazasOcupacionDTO, EstadisticaPlazasDTO, PlazaDTO } from '../../../models/dto/plazasDto';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -18,42 +18,92 @@ export class Inicio implements OnInit {
   segundaPlantaMax = signal<number>(0);
   terceraPlantaMax = signal<number>(0);
   plazasBloqueadas = signal<number>(0);
-  ocupacionPorPlanta = signal<TotalOcupacionPorPlantaDTO | null>(null);
+  plazasOcupacion = signal<PlazasOcupacionDTO | null>(null);
 
   error = signal<string | null>(null);
   cargando = signal<boolean>(false);
 
-  primeraPlantaLibre = computed(() => this.primeraPlantaMax() - (this.ocupacionPorPlanta()?.primera ?? 0));
-  segundaPlantaLibre = computed(() => this.segundaPlantaMax() - (this.ocupacionPorPlanta()?.segunda ?? 0));
-  terceraPlantaLibre = computed(() => this.terceraPlantaMax() - (this.ocupacionPorPlanta()?.tercera ?? 0));
+  estadisticaVacia: EstadisticaPlazasDTO = { libres: 0, ocupadas: 0, bloqueadas: 0, capacidad: 0 };
+
+  primeraPlantaLibre = computed(() => this.plazasOcupacion()?.planta?.primera?.libres ?? 0);
+  segundaPlantaLibre = computed(() => this.plazasOcupacion()?.planta?.segunda?.libres ?? 0);
+  terceraPlantaLibre = computed(() => this.plazasOcupacion()?.planta?.tercera?.libres ?? 0);
+
+  primeraNormal = computed(() => this.plazasOcupacion()?.planta?.primera?.tipo?.normal ?? this.estadisticaVacia);
+  primeraPmr = computed(() => this.plazasOcupacion()?.planta?.primera?.tipo?.pmr ?? this.estadisticaVacia);
+  primeraElectrica = computed(() => this.plazasOcupacion()?.planta?.primera?.tipo?.electrica ?? this.estadisticaVacia);
+
+  segundaNormal = computed(() => this.plazasOcupacion()?.planta?.segunda?.tipo?.normal ?? this.estadisticaVacia);
+  segundaPmr = computed(() => this.plazasOcupacion()?.planta?.segunda?.tipo?.pmr ?? this.estadisticaVacia);
+  segundaElectrica = computed(() => this.plazasOcupacion()?.planta?.segunda?.tipo?.electrica ?? this.estadisticaVacia);
+
+  terceraNormal = computed(() => this.plazasOcupacion()?.planta?.tercera?.tipo?.normal ?? this.estadisticaVacia);
+  terceraPmr = computed(() => this.plazasOcupacion()?.planta?.tercera?.tipo?.pmr ?? this.estadisticaVacia);
+  terceraElectrica = computed(() => this.plazasOcupacion()?.planta?.tercera?.tipo?.electrica ?? this.estadisticaVacia);
+
+  primeraPlantaOcupadas = computed(() => this.plazasOcupacion()?.planta?.primera?.ocupadas ?? 0);
+  primeraPlantaBloqueadas = computed(() => this.plazasOcupacion()?.planta?.primera?.bloqueadas ?? 0);
+
+  segundaPlantaOcupadas = computed(() => this.plazasOcupacion()?.planta?.segunda?.ocupadas ?? 0);
+  segundaPlantaBloqueadas = computed(() => this.plazasOcupacion()?.planta?.segunda?.bloqueadas ?? 0);
+
+  terceraPlantaOcupadas = computed(() => this.plazasOcupacion()?.planta?.tercera?.ocupadas ?? 0);
+  terceraPlantaBloqueadas = computed(() => this.plazasOcupacion()?.planta?.tercera?.bloqueadas ?? 0);
+
+  plazasPlantaMenos1 = signal<PlazaDTO[]>([]);
+
+  plantaSeleccionada = signal<number>(-1);
+  plazasDeLaPlanta = signal<PlazaDTO[]>([]);
 
   ngOnInit() {
     this.cargando.set(true);
     this.error.set(null);
+    this.cargarPlazasDePlanta(-1);
 
     forkJoin({
-      ocupadas: this.plazaService.getPlazasOcupadas(),
+      plazasOcupacion: this.plazaService.getPlazasOcupacion(),
       bloqueadas: this.plazaService.getPlazasBloqueadas(),
       totales: this.plazaService.getPlazasTotales(),
-      ocupacionPorPlanta: this.plazaService.getPlazasOcupadasPorPlanta(),
-      planta0Max: this.plazaService.getPlazasTotalesPorPlanta(0),
+      plantaCeroMax: this.plazaService.getPlazasTotalesPorPlanta(0),
       plantaMenos1Max: this.plazaService.getPlazasTotalesPorPlanta(-1),
       plantaMenos2Max: this.plazaService.getPlazasTotalesPorPlanta(-2),
+      plazasPlantaMenos1: this.plazaService.getPlazasPorPlanta(-1),
     }).subscribe({
       next: (datos) => {
-        this.plazas.set(datos.ocupadas)
-        this.plazasBloqueadas.set(datos.bloqueadas)
-        this.plazasMax.set(datos.totales)
-        this.ocupacionPorPlanta.set(datos.ocupacionPorPlanta)
-        this.primeraPlantaMax.set(datos.planta0Max)
-        this.segundaPlantaMax.set(datos.plantaMenos1Max)
-        this.terceraPlantaMax.set(datos.plantaMenos2Max)
-        this.cargando.set(false)
+        this.plazas.set(datos.plazasOcupacion.total?.ocupadas ?? 0);
+        this.plazasBloqueadas.set(datos.bloqueadas);
+        this.plazasMax.set(datos.totales);
+        this.plazasOcupacion.set(datos.plazasOcupacion);
+        this.primeraPlantaMax.set(datos.plantaCeroMax);
+        this.segundaPlantaMax.set(datos.plantaMenos1Max);
+        this.terceraPlantaMax.set(datos.plantaMenos2Max);
+        this.cargando.set(false);
+        this.plazasPlantaMenos1.set(datos.plazasPlantaMenos1);
       },
       error: () => {
-        this.cargando.set(false)
-        this.error.set('Error al cargar los datos de plazas')
+        this.cargando.set(false);
+        this.error.set('Error al cargar los datos de plazas');
       },
+    });
+  }
+
+  cambiarPlanta(plantaVista: number) {
+    this.plantaSeleccionada.set(plantaVista);
+    const plantaBd = this.plantaVistaABd(plantaVista);
+    this.cargarPlazasDePlanta(plantaBd);
+  }
+
+  private plantaVistaABd(vista: number): number {
+    if (vista === -1) return 0;
+    if (vista === -2) return -1;
+    if (vista === -3) return -2;
+    return vista;
+  }
+
+  private cargarPlazasDePlanta(planta: number) {
+    this.plazaService.getPlazasPorPlanta(planta).subscribe({
+      next: (plazas) => this.plazasDeLaPlanta.set(plazas),
+      error: () => this.error.set('Error al cargar las plazas de la planta')
     });
   }
 }

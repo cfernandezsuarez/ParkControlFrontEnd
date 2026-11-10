@@ -1,4 +1,3 @@
-import { TotalPlazasOcupadasDTO } from './dto/plazasDto';
 import { TipoPlaza, EstadoPlaza } from './enums';
 
 export class Plazas {

@@ -1,84 +1,294 @@
 <section class="w-full h-full flex flex-col gap-5">
+
   <div class="flex flex-col">
     <span class="text-brand-blue-300 text-sm font-bold">CONSULTA PÚBLICA / PARKCONTROL</span>
-    <h1 class="text-3xl">Disponibilidad detallada</h1>
+    <h1 class="text-3xl font-bold">Disponibilidad detallada</h1>
   </div>
+
   <div class="w-full flex gap-5 flex-col">
     <div class="flex flex-wrap flex-1 gap-5 justify-between">
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-brand-blue-400 rounded-xl justify-center text-white">
-        <span>Plazas libres</span>
-        <span class="text-4xl">
-          @if (cargando()) {
-            ...
-          }
-          @if (!cargando()) {
-            {{ plazasMax() - plazas() }}
-          }
-          / {{ plazasMax() }}
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-brand-blue-400 rounded-xl justify-center text-white min-w-[200px]">
+        <span class="font-medium">Plazas libres</span>
+        <span class="text-4xl font-bold">
+          @if (cargando()) { ... }
+          @if (!cargando()) { {{ plazasMax() - plazas() }} }
+          <span class="text-xl font-normal opacity-80">/ {{ plazasMax() }}</span>
         </span>
       </div>
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
-        <span class="text-brand-gray-400">Ocupadas</span>
-        <span class="text-4xl text-black">
-          @if (cargando()) {
-            ...
-          }
-          @if (!cargando()) {
-            {{ plazas() }}
-          }
-          / {{ plazasMax() }}
+
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center min-w-[200px] shadow-sm border border-gray-100">
+        <span class="text-brand-gray-400 font-medium">Ocupadas</span>
+        <span class="text-4xl text-black font-bold">
+          @if (cargando()) { ... }
+          @if (!cargando()) { {{ plazas() }} }
+          <span class="text-xl font-normal text-gray-500">/ {{ plazasMax() }}</span>
         </span>
       </div>
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
-        <span class="text-brand-gray-400">Mantenimiento</span>
-        <span class="text-4xl text-black">
-          @if (cargando()) {
-            ...
-          }
-          @if (!cargando()) {
-            {{ plazasBloqueadas() }}
-          }
+
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center min-w-[200px] shadow-sm border border-gray-100">
+        <span class="text-brand-gray-400 font-medium">Mantenimiento</span>
+        <span class="text-4xl text-black font-bold">
+          @if (cargando()) { ... }
+          @if (!cargando()) { {{ plazasBloqueadas() }} }
         </span>
       </div>
     </div>
 
-    <div class="flex flex-wrap flex-1 gap-5 justify-between">
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-centere">
-        <span class="text-2xl text-brand-gray-400">Panta -1</span>
-        <span class="text-4xl text-black">
-          @if (cargando()) {
-            ...
-          }
-          @if (!cargando()) {
-            {{ primeraPlantaLibre() }}
-          }
-          libres
-        </span>
+    <div class="flex flex-wrap flex-1 gap-5 justify-between items-stretch">
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl shadow-sm border border-gray-100 min-w-[300px]">
+        <span class="text-2xl text-brand-gray-400">Planta -1</span>
+        <div class="flex justify-between items-center">
+          <span class="text-4xl text-black font-bold">
+            @if (cargando()) { ... }
+            @if (!cargando()) { {{ primeraPlantaLibre() }} }
+            <span class="text-xl font-normal text-gray-500">libres</span>
+          </span>
+          <span class="bg-brand-gray-50 text-brand-gray-400 font-semibold py-1 px-3 rounded-full text-sm">
+            @if (cargando()) { ... }
+            @if (!cargando()) { {{ primeraPlantaMax() }} }
+            plazas
+          </span>
+        </div>
+
+        <div class="text-sm text-gray-500">
+          {{ primeraPlantaOcupadas() }} ocupadas · {{ primeraPlantaBloqueadas() }} bloqueadas
+        </div>
+
+        <div class="mt-2">
+          <table class="w-full text-sm text-left">
+            <thead class="text-xs text-gray-500 uppercase bg-gray-50 rounded-t-lg">
+            <tr>
+              <th scope="col" class="px-4 py-3 font-medium rounded-l-lg">Tipo</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">L</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">O</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">B</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium rounded-r-lg">CAP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b border-gray-100 last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Normal</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraNormal().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraNormal().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraNormal().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ primeraNormal().capacidad }}</td>
+            </tr>
+            <tr class="border-b border-gray-100 last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Movilidad reducida</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraPmr().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraPmr().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraPmr().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ primeraPmr().capacidad }}</td>
+            </tr>
+            <tr class="last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Cargador eléctrico</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraElectrica().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraElectrica().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ primeraElectrica().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ primeraElectrica().capacidad }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
+
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl shadow-sm border border-gray-100 min-w-[300px]">
         <span class="text-2xl text-brand-gray-400">Planta -2</span>
-        <span class="text-4xl text-black">
-          @if (cargando()) {
-            ...
-          }
-          @if (!cargando()) {
-            {{ segundaPlantaLibre() }}
-          }
-          libres
-        </span>
+        <div class="flex justify-between items-center">
+          <span class="text-4xl text-black font-bold">
+            @if (cargando()) { ... }
+            @if (!cargando()) { {{ segundaPlantaLibre() }} }
+            <span class="text-xl font-normal text-gray-500">libres</span>
+          </span>
+          <span class="bg-brand-gray-50 text-brand-gray-400 font-semibold py-1 px-3 rounded-full text-sm">
+            @if (cargando()) { ... }
+            @if (!cargando()) { {{ segundaPlantaMax() }} }
+            plazas
+          </span>
+        </div>
+
+        <div class="text-sm text-gray-500">
+          {{ segundaPlantaOcupadas() }} ocupadas · {{ segundaPlantaBloqueadas() }} bloqueadas
+        </div>
+
+        <div class="mt-2">
+          <table class="w-full text-sm text-left">
+            <thead class="text-xs text-gray-500 uppercase bg-gray-50 rounded-t-lg">
+            <tr>
+              <th scope="col" class="px-4 py-3 font-medium rounded-l-lg">Tipo</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">L</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">O</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">B</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium rounded-r-lg">CAP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b border-gray-100 last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Normal</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaNormal().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaNormal().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaNormal().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ segundaNormal().capacidad }}</td>
+            </tr>
+            <tr class="border-b border-gray-100 last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Movilidad reducida</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaPmr().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaPmr().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaPmr().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ segundaPmr().capacidad }}</td>
+            </tr>
+            <tr class="last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Cargador eléctrico</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaElectrica().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaElectrica().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ segundaElectrica().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ segundaElectrica().capacidad }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl justify-center">
+
+      <div class="flex flex-1 flex-col gap-3 p-5 bg-white rounded-xl shadow-sm border border-gray-100 min-w-[300px]">
         <span class="text-2xl text-brand-gray-400">Planta -3</span>
-        <span class="text-4xl text-black">
-          @if (cargando()) {
-            ...
-          }
-          @if (!cargando()) {
-            {{ terceraPlantaLibre() }}
-          }
-          libres
-        </span>
+        <div class="flex justify-between items-center">
+          <span class="text-4xl text-black font-bold">
+            @if (cargando()) { ... }
+            @if (!cargando()) { {{ terceraPlantaLibre() }} }
+            <span class="text-xl font-normal text-gray-500">libres</span>
+          </span>
+          <span class="bg-brand-gray-50 text-brand-gray-400 font-semibold py-1 px-3 rounded-full text-sm">
+            @if (cargando()) { ... }
+            @if (!cargando()) { {{ terceraPlantaMax() }} }
+            plazas
+          </span>
+        </div>
+
+        <div class="text-sm text-gray-500">
+          {{ terceraPlantaOcupadas() }} ocupadas · {{ terceraPlantaBloqueadas() }} bloqueadas
+        </div>
+
+        <div class="mt-2">
+          <table class="w-full text-sm text-left">
+            <thead class="text-xs text-gray-500 uppercase bg-gray-50 rounded-t-lg">
+            <tr>
+              <th scope="col" class="px-4 py-3 font-medium rounded-l-lg">Tipo</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">L</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">O</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium">B</th>
+              <th scope="col" class="px-2 py-3 text-center font-medium rounded-r-lg">CAP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b border-gray-100 last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Normal</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraNormal().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraNormal().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraNormal().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ terceraNormal().capacidad }}</td>
+            </tr>
+            <tr class="border-b border-gray-100 last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Movilidad reducida</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraPmr().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraPmr().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraPmr().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ terceraPmr().capacidad }}</td>
+            </tr>
+            <tr class="last:border-0">
+              <td class="px-4 py-3 font-medium text-gray-900">Cargador eléctrico</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraElectrica().libres }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraElectrica().ocupadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-600">{{ terceraElectrica().bloqueadas }}</td>
+              <td class="px-2 py-3 text-center text-gray-900 font-semibold">{{ terceraElectrica().capacidad }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex gap-2">
+      <button
+        (click)="cambiarPlanta(-1)"
+        [class.bg-brand-blue-500]="plantaSeleccionada() === -1"
+        [class.text-white]="plantaSeleccionada() === -1"
+        [class.bg-gray-100]="plantaSeleccionada() !== -1"
+        [class.text-gray-600]="plantaSeleccionada() !== -1"
+        class="px-4 py-2 rounded-lg font-medium transition-colors hover:bg-brand-blue-400 hover:text-white cursor-pointer"
+      >
+        Planta -1
+      </button>
+
+      <button
+        (click)="cambiarPlanta(-2)"
+        [class.bg-brand-blue-500]="plantaSeleccionada() === -2"
+        [class.text-white]="plantaSeleccionada() === -2"
+        [class.bg-gray-100]="plantaSeleccionada() !== -2"
+        [class.text-gray-600]="plantaSeleccionada() !== -2"
+        class="px-4 py-2 rounded-lg font-medium transition-colors hover:bg-brand-blue-400 hover:text-white cursor-pointer"
+      >
+        Planta -2
+      </button>
+
+      <button
+        (click)="cambiarPlanta(-3)"
+        [class.bg-brand-blue-500]="plantaSeleccionada() === -3"
+        [class.text-white]="plantaSeleccionada() === -3"
+        [class.bg-gray-100]="plantaSeleccionada() !== -3"
+        [class.text-gray-600]="plantaSeleccionada() !== -3"
+        class="px-4 py-2 rounded-lg font-medium transition-colors hover:bg-brand-blue-400 hover:text-white cursor-pointer"
+      >
+        Planta -3
+      </button>
+    </div>
+
+    <h2 class="text-2xl">Esquema de plazas · planta {{ plantaSeleccionada() }}</h2>
+
+    <div class="flex gap-4 text-sm text-gray-600">
+    <span class="flex items-center gap-2">
+      <span class="w-4 h-4 rounded bg-green-100 border border-green-300"></span> Libre
+    </span>
+      <span class="flex items-center gap-2">
+      <span class="w-4 h-4 rounded bg-blue-200 border border-blue-300"></span> Ocupada
+    </span>
+      <span class="flex items-center gap-2">
+      <span class="w-4 h-4 rounded bg-purple-100 border border-purple-300"></span> Mantenimiento
+    </span>
+    </div>
+
+    <div class="grid grid-cols-14 gap-2 bg-gray-50 p-4 rounded-xl">
+      @for (plaza of plazasDeLaPlanta(); track plaza.id) {
+        <div
+          [class.bg-green-100]="plaza.estado === 'LIBRE'"
+          [class.text-green-800]="plaza.estado === 'LIBRE'"
+          [class.border-green-300]="plaza.estado === 'LIBRE'"
+
+          [class.bg-blue-200]="plaza.estado === 'OCUPADA'"
+          [class.text-blue-900]="plaza.estado === 'OCUPADA'"
+          [class.border-blue-300]="plaza.estado === 'OCUPADA'"
+
+          [class.bg-purple-100]="plaza.estado === 'BLOQUEADA'"
+          [class.text-purple-800]="plaza.estado === 'BLOQUEADA'"
+          [class.border-purple-300]="plaza.estado === 'BLOQUEADA'"
+
+          class="flex flex-col items-center justify-center p-1 rounded border text-xs font-bold"
+        >
+          <span>{{ ($index + 1).toString().padStart(3, '0') }}</span>
+          <span class="text-[10px] font-normal opacity-70">
+          @if (plaza.tipo === 'NORMAL') { N }
+          @else if (plaza.tipo === 'PMR') { MR }
+          @else if (plaza.tipo === 'ELECTRICA') { EV }
+        </span>
+        </div>
+      } @empty {
+        <p class="col-span-14 text-center text-gray-500 py-4">Cargando plazas...</p>
+      }
+    </div>
+
+    <span class="text-xs text-gray-500">
+      N: normal · MR: movilidad reducida · EV: cargador eléctrico
+    </span>
   </div>
 </section>

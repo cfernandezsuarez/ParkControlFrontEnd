@@ -1,9 +1,7 @@
 <div class="flex h-dvh w-full bg-gray-50">
 
-  <!-- ASIDE: Menú lateral a pantalla completa -->
   <aside class="w-64 bg-brand-blue-600 text-white border-r border-gray-200 flex flex-col p-4 shadow-sm">
 
-    <!-- Logo / Título -->
     <div class="mb-8 px-2">
       <div class="flex items-center gap-3">
         <img src="/Logo.png" class="bg-white rounded-full size-10" draggable="false"/>
@@ -11,10 +9,8 @@
       </div>
     </div>
 
-    <!-- Menú dinámico por rol -->
     <nav class="flex flex-col gap-1 flex-1">
 
-      <!-- Todos -->
       <a
         routerLink="/dashboard/inicio"
         routerLinkActive="bg-brand-blue-300 text-white font-semibold"
@@ -23,7 +19,6 @@
         Inicio
       </a>
 
-      <!-- ABONADO -->
       @if (auth.tieneRol('ABONADO')) {
         <div class="mt-4 mb-1 px-3">
           <span class="text-xs font-bold text-brand-blue-200 uppercase tracking-wider">Mi cuenta</span>
@@ -47,7 +42,6 @@
         </nav>
       }
 
-      <!-- OPERADOR y ADMIN -->
       @if (auth.tieneRol('OPERADOR', 'ADMIN')) {
         <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">
           <span class="text-xs font-bold text-brand-blue-200 uppercase tracking-wider">Operativa</span>
@@ -67,7 +61,6 @@
         </a>
       }
 
-      <!-- Solo ADMIN -->
       @if (auth.tieneRol('ADMIN')) {
         <div class="mt-4 text-xs font-bold text-gray-400 uppercase px-3 mb-1">
           <span>Administración</span>
@@ -94,7 +87,6 @@
       </div>
     </nav>
 
-    <!-- Botón de cerrar sesión al fondo -->
     <button (click)="auth.logout()"
             class="flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 transition-colors hover:bg-red-500/90 hover:text-white cursor-pointer">
       <svg lucideLogOut class="w-5 h-5" ></svg>
@@ -103,9 +95,10 @@
 
   </aside>
 
-  <!-- MAIN: Contenido de la ruta hija -->
-  <main class="flex-1 min-h-dvh p-8 bg-brand-gray-50 overflow-y-auto">
-    <router-outlet />
+  <main class="flex-1 h-full bg-brand-gray-50 overflow-y-auto">
+    <div class="p-8">
+      <router-outlet />
+    </div>
   </main>
 
 </div>
