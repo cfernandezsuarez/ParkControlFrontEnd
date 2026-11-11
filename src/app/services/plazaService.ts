@@ -36,6 +36,10 @@ export class PlazaService {
     }
 
     cambiarEstadoPlaza(id: number): Observable<string> {
-      return this.http.patch<string>(`${this.apiUrl}/plazas/${id}/estado`, {});
+      return this.http.patch<string>(
+        `${this.apiUrl}/plazas/${id}/estado`,
+        {},
+        { responseType: 'text' },
+      );
     }
 }

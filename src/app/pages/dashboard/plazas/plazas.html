@@ -50,7 +50,7 @@
     </div>
 
     <div class="grid grid-cols-14 gap-2 bg-gray-50 p-4 rounded-xl">
-      @for (plaza of plazasDeLaPlanta(); track plaza.id) {
+      @for (plaza of plazasDeLaPlanta(); track plaza.id + plaza.estado) {
         <div
           [class.bg-green-100]="plaza.estado === 'LIBRE'"
           [class.text-green-800]="plaza.estado === 'LIBRE'"
@@ -83,4 +83,9 @@
       N: normal · MR: movilidad reducida · EV: cargador eléctrico
     </span>
   </div>
+  @if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+      {{ error() }}
+    </div>
+  }
 </section>

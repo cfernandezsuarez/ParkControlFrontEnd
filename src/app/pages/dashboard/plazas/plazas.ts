@@ -19,7 +19,6 @@ export class Plazas implements OnInit {
   plazasDeLaPlanta = signal<PlazaDTO[]>([]);
 
   ngOnInit() {
-    // Cargar directamente la planta -1 (BD 0) al iniciar
     this.cargarPlazasDePlanta(0);
   }
 
@@ -39,8 +38,15 @@ export class Plazas implements OnInit {
   bloquearDesbloquear(id: number) {
     this.plazaService.cambiarEstadoPlaza(id).subscribe({
       next: (mensaje) => {
-        const plantaBd = this.plantaVistaABd(this.plantaSeleccionada());
-        this.cargarPlazasDePlanta(plantaBd);
+        this.plazasDeLaPlanta.update((plazas) =>
+          plazas.map((plaza) => {
+            if (plaza.id === id && plaza.estado !== 'OCUPADA') {
+              const nuevoEstado = plaza.estado === 'BLOQUEADA' ? 'LIBRE' : 'BLOQUEADA';
+              return { ...plaza, estado: nuevoEstado };
+            }
+            return plaza;
+          }),
+        )
       },
       error: () => {
         this.error.set('Error al cambiar el estado de la plaza');
