@@ -50,28 +50,31 @@
     </div>
 
     <div class="grid grid-cols-14 gap-2 bg-gray-50 p-4 rounded-xl">
-      @for (plaza of plazasDeLaPlanta(); track plaza.id + plaza.estado) {
+      @for (plaza of plazasDeLaPlanta(); track plaza.id + '-' + plaza.estado) {
         <div
-          [class.bg-green-100]="plaza.estado === 'LIBRE'"
-          [class.text-green-800]="plaza.estado === 'LIBRE'"
-          [class.border-green-300]="plaza.estado === 'LIBRE'"
+          [class.bg-green-100]="plaza.estado === EstadoPlaza.LIBRE"
+          [class.text-green-800]="plaza.estado === EstadoPlaza.LIBRE"
+          [class.border-green-300]="plaza.estado === EstadoPlaza.LIBRE"
 
-          [class.bg-red-200]="plaza.estado === 'OCUPADA'"
-          [class.text-red-900]="plaza.estado === 'OCUPADA'"
-          [class.border-red-300]="plaza.estado === 'OCUPADA'"
+          [class.bg-red-200]="plaza.estado === EstadoPlaza.OCUPADA"
+          [class.text-red-900]="plaza.estado === EstadoPlaza.OCUPADA"
+          [class.border-red-300]="plaza.estado === EstadoPlaza.OCUPADA"
 
-          [class.bg-yellow-100]="plaza.estado === 'BLOQUEADA'"
-          [class.text-yellow-800]="plaza.estado === 'BLOQUEADA'"
-          [class.border-yellow-300]="plaza.estado === 'BLOQUEADA'"
+          [class.bg-yellow-100]="plaza.estado === EstadoPlaza.BLOQUEADA"
+          [class.text-yellow-800]="plaza.estado === EstadoPlaza.BLOQUEADA"
+          [class.border-yellow-300]="plaza.estado === EstadoPlaza.BLOQUEADA"
 
-          class="flex flex-col items-center justify-center p-1 rounded border text-xs font-bold cursor-pointer"
-          (click)="bloquearDesbloquear(plaza.id)"
+          [class.cursor-pointer]="plaza.estado !== EstadoPlaza.OCUPADA"
+          [class.cursor-not-allowed]="plaza.estado === EstadoPlaza.OCUPADA"
+
+          class="flex flex-col items-center justify-center p-1 rounded border text-xs font-bold transition-transform hover:scale-105"
+          (click)="plaza.estado !== EstadoPlaza.OCUPADA && bloquearDesbloquear(plaza.id)"
         >
           <span>{{ ($index + 1).toString().padStart(3, '0') }}</span>
-            <span class="text-[10px] font-normal opacity-70">
-            @if (plaza.tipo === 'NORMAL') { N }
-            @else if (plaza.tipo === 'PMR') { MR }
-            @else if (plaza.tipo === 'ELECTRICA') { EV }
+          <span class="text-[10px] font-normal opacity-70">
+            @if (plaza.tipo === TipoPlaza.NORMAL) { N }
+            @else if (plaza.tipo === TipoPlaza.PMR) { MR }
+            @else if (plaza.tipo === TipoPlaza.ELECTRICA) { EV }
           </span>
         </div>
       } @empty {

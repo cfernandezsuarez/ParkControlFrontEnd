@@ -1,9 +1,11 @@
+import {EstadoPlaza, TipoPlaza} from '../enums';
+
 export interface PlazaDTO {
   id: number;
   numero: number;
   planta: number;
-  tipo: 'NORMAL' | 'PMR' | 'ELECTRICA';
-  estado: 'LIBRE' | 'OCUPADA' | 'BLOQUEADA';
+  tipo: TipoPlaza;
+  estado: EstadoPlaza;
 }
 
 export interface EstadisticaPlazasDTO {

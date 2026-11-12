@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PlazaDTO } from '../../../models/dto/plazasDto';
 import { PlazaService } from '../../../services/plazaService';
+import { EstadoPlaza, TipoPlaza } from '../../../models/enums';
 
 @Component({
   imports: [],
@@ -36,17 +37,21 @@ export class Plazas implements OnInit {
   }
 
   bloquearDesbloquear(id: number) {
+    const plaza = this.plazasDeLaPlanta().find(p => p.id === id);
+    if (!plaza || plaza.estado === EstadoPlaza.OCUPADA) return
     this.plazaService.cambiarEstadoPlaza(id).subscribe({
-      next: (mensaje) => {
+      next: () => {
         this.plazasDeLaPlanta.update((plazas) =>
-          plazas.map((plaza) => {
-            if (plaza.id === id && plaza.estado !== 'OCUPADA') {
-              const nuevoEstado = plaza.estado === 'BLOQUEADA' ? 'LIBRE' : 'BLOQUEADA';
-              return { ...plaza, estado: nuevoEstado };
+          plazas.map((p) => {
+            if (p.id === id) {
+              const nuevoEstado = p.estado === EstadoPlaza.BLOQUEADA
+                ? EstadoPlaza.LIBRE
+                : EstadoPlaza.BLOQUEADA
+              return { ...p, estado: nuevoEstado }
             }
-            return plaza;
-          }),
-        )
+            return p
+          })
+        );
       },
       error: () => {
         this.error.set('Error al cambiar el estado de la plaza');
@@ -67,4 +72,7 @@ export class Plazas implements OnInit {
       }
     });
   }
+
+  protected readonly EstadoPlaza = EstadoPlaza;
+  protected readonly TipoPlaza = TipoPlaza;
 }

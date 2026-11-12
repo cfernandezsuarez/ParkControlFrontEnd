@@ -1,1 +1,71 @@
-<p>entrada works!</p>
+<section class="w-full h-full flex flex-col gap-5">
+
+  <div class="flex flex-col">
+    <span class="text-brand-blue-300 text-sm font-bold">OPERATIVA EN DIRECTO</span>
+    <h1 class="text-3xl font-bold">Control de Barrera de Entrada</h1>
+  </div>
+
+  <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex items-center gap-3 border-b-1 pb-5 border-b-brand-gray-100">
+      <svg lucideCheck class="text-white bg-green-500 rounded-xl p-1"></svg>
+      <span class="text-green-500 text-2xl font-bold">Registro de Entrada</span>
+    </div>
+    <form (ngSubmit)="registrarEntrada()" class="flex flex-col gap-5">
+      <div class="flex flex-col gap-2">
+        <label for="matricula" class="uppercase text-sm font-bold text-gray-600">Matrícula detectada *</label>
+        <input [(ngModel)]="matricula" name="matricula" id="matricula" required type="text" placeholder="Ej: 9988XYZ" class="py-3 px-4 rounded-lg bg-brand-gray-50 border border-brand-gray-100">
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="tipoPlaza" class="uppercase text-sm font-bold text-gray-600">
+          Tipo de plaza *
+        </label>
+
+        <div class="relative">
+          <select
+            [(ngModel)]="tipoPlazaSeleccionada"
+            name="tipoPlaza"
+            id="tipoPlaza"
+            required
+            name="tipoPlaza"
+            class="w-full cursor-pointer bg-brand-gray-50 border border-brand-gray-100 text-brand-gray-400 py-3 px-4 rounded-lg"
+          >
+            <option value="" disabled selected>Selecciona una opción</option>
+            <option value="NORMAL">Normal</option>
+            <option value="PMR">Movilidad reducida (PMR)</option>
+            <option value="ELECTRICA">Cargador eléctrico</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="tarifa" class="uppercase text-sm font-bold text-gray-600">
+          Tarifa vigente
+        </label>
+        <div class="relative">
+          <select
+            [(ngModel)]="tarifaSeleccionada"
+            name="tarifa"
+            id="tarifa"
+            required
+            class="w-full cursor-pointer bg-brand-gray-50 border border-brand-gray-100 text-brand-gray-600 py-3 px-4 rounded-lg"
+          >
+            <option value="" disabled selected>Selecciona una tarifa</option>
+            @for (t of tarifas; track t.id) {
+              <option [value]="t.id">
+                {{ t.precio }} €/min · Tope {{ t.topeMaximo }} € · Cortesía {{ t.minCortesia }} min
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="flex items-center justify-center gap-2 hover:bg-green-600 hover:scale-101 transition-all duration-300 cursor-pointer bg-green-500 font-bold text-lg py-3 px-2 rounded-lg text-white">
+        <svg lucideTicket></svg>
+        @if (cargando()) {
+          Emitiendo...
+        } @else {
+          Emitir ticket
+        }
+      </button>
+    </form>
+  </div>
+
+</section>
