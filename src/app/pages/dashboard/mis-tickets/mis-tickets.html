@@ -1,1 +1,84 @@
-<p>mis-tickets works!</p>
+<section class="w-full h-full flex flex-col gap-5">
+
+  <div class="flex flex-col">
+    <span class="text-brand-blue-300 text-sm font-bold">MI CUENTA / PARKCONTROL</span>
+    <h1 class="text-3xl font-bold">Mis Tickets</h1>
+  </div>
+
+  @if (cargando()) {
+    <div class="p-8 text-center text-gray-500">Cargando tus tickets...</div>
+  } @else if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ error() }}
+    </div>
+  } @else {
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+
+      <table class="w-full text-sm text-left">
+        <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
+        <tr>
+          <th scope="col" class="px-6 py-4 font-semibold">Matrícula</th>
+          <th scope="col" class="px-6 py-4 font-semibold">Estado</th>
+          <th scope="col" class="px-6 py-4 font-semibold">Entrada</th>
+          <th scope="col" class="px-6 py-4 font-semibold">Salida</th>
+          <th scope="col" class="px-6 py-4 font-semibold text-center">Plaza</th>
+          <th scope="col" class="px-6 py-4 font-semibold text-right">Importe</th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (t of tickets(); track t.id) {
+            <tr class="hover:bg-gray-50 transition-colors">
+
+              <!-- Matrícula -->
+              <td class="px-6 py-4 font-bold text-gray-800 whitespace-nowrap">
+                {{ t.matricula }}
+              </td>
+
+              <!-- Estado -->
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  [class.bg-green-100]="t.estado === EstadoTicket.ABIERTO"
+                  [class.text-green-700]="t.estado === EstadoTicket.ABIERTO"
+                  [class.bg-gray-200]="t.estado === EstadoTicket.CERRADO"
+                  [class.text-gray-600]="t.estado === EstadoTicket.CERRADO"
+                  class="text-xs font-bold px-2.5 py-1 rounded-full uppercase"
+                >
+                  {{ t.estado }}
+                </span>
+              </td>
+
+              <!-- Entrada -->
+              <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
+                {{ t.horaEntrada | date:'dd/MM/yyyy HH:mm' }}
+              </td>
+
+              <!-- Salida -->
+              <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
+                {{ t.horaSalida ? (t.horaSalida | date:'dd/MM/yyyy HH:mm') : 'En curso...' }}
+              </td>
+
+              <!-- Plaza -->
+              <td class="px-6 py-4 text-gray-600 text-center whitespace-nowrap">
+                {{ t.numeroPlaza ?? 'N/A' }}
+              </td>
+
+              <!-- Importe -->
+              <td class="px-6 py-4 text-right font-bold text-brand-blue-600 whitespace-nowrap">
+                {{ t.importe }} €
+              </td>
+
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                No tienes tickets registrados todavía.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+    </div>
+  }
+</section>

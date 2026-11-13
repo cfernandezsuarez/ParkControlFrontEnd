@@ -9,3 +9,8 @@ export enum EstadoPlaza {
   OCUPADA = 'OCUPADA',
   BLOQUEADA = 'BLOQUEADA',
 }
+
+export enum EstadoTicket {
+  CERRADO = 'CERRADO',
+  ABIERTO = 'ABIERTO',
+}
