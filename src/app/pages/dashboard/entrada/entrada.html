@@ -26,7 +26,6 @@
             name="tipoPlaza"
             id="tipoPlaza"
             required
-            name="tipoPlaza"
             class="w-full cursor-pointer bg-brand-gray-50 border border-brand-gray-100 text-brand-gray-400 py-3 px-4 rounded-lg"
           >
             <option value="" disabled selected>Selecciona una opción</option>
@@ -46,10 +45,10 @@
             name="tarifa"
             id="tarifa"
             required
-            class="w-full cursor-pointer bg-brand-gray-50 border border-brand-gray-100 text-brand-gray-600 py-3 px-4 rounded-lg"
+            class="w-full cursor-pointer bg-brand-gray-50 border border-brand-gray-100 text-brand-gray-400 py-3 px-4 rounded-lg"
           >
             <option value="" disabled selected>Selecciona una tarifa</option>
-            @for (t of tarifas; track t.id) {
+            @for (t of tarifas(); track t.id) {
               <option [value]="t.id">
                 {{ t.precio }} €/min · Tope {{ t.topeMaximo }} € · Cortesía {{ t.minCortesia }} min
               </option>

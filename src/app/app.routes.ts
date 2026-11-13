@@ -7,7 +7,7 @@ import { Auth } from './pages/auth/auth';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Inicio } from './pages/dashboard/inicio/inicio';
 import { MisTickets } from './pages/dashboard/mis-tickets/mis-tickets';
-import { Tarifa } from './pages/dashboard/tarifa/tarifa';
+import { TarifaDashboard } from './pages/dashboard/tarifa-dashboard/tarifa-dashboard';
 import { Tickets } from './pages/dashboard/tickets/tickets';
 import { Plazas } from './pages/dashboard/plazas/plazas';
 import { Informes } from './pages/dashboard/informes/informes';
@@ -47,7 +47,7 @@ export const routes: Routes = [
       },
       {
         path: 'tarifa',
-        component: Tarifa,
+        component: TarifaDashboard,
         canActivate: [rolGuard],
         data: { roles: ['ABONADO'] },
       },

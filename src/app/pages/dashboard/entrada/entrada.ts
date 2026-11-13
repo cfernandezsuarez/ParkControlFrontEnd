@@ -21,7 +21,7 @@ export class Entrada implements OnInit {
   tarifaSeleccionada: number | null = null;
   matricula = signal<string>('');
   tipoPlazaSeleccionada = signal<string>('');
-  tarifas: Tarifa[] = [];
+  tarifas = signal<Tarifa[]>([])
 
   cargando = signal<boolean>(false);
   error = signal<string | null>(null);
@@ -29,7 +29,7 @@ export class Entrada implements OnInit {
   ngOnInit() {
     this.tarifaService.getTarifasVigentes().subscribe({
       next: (data) => {
-        this.tarifas = data
+        this.tarifas.set(data)
       },
       error: (err) => {
         this.error.set(err)
