@@ -1,11 +1,11 @@
 export enum TipoPlaza {
-    NORMAL = 0,
-    PMR = 1,
-    ELECTRICA = 2,
+  NORMAL = 'NORMAL',
+  PMR = 'PMR',
+  ELECTRICA = 'ELECTRICA',
 }
 
 export enum EstadoPlaza {
-    LIBRE = 0,
-    OCUPADA = 1,
-    BLOQUEADA = 2,
+  LIBRE = 'LIBRE',
+  OCUPADA = 'OCUPADA',
+  BLOQUEADA = 'BLOQUEADA',
 }

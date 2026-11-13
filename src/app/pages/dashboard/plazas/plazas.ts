@@ -25,11 +25,11 @@ export class Plazas implements OnInit {
 
   cambiarPlanta(plantaVista: number) {
     this.plantaSeleccionada.set(plantaVista);
-    const plantaBd = this.plantaVistaABd(plantaVista);
+    const plantaBd = this.plantaVistaBd(plantaVista);
     this.cargarPlazasDePlanta(plantaBd);
   }
 
-  private plantaVistaABd(vista: number): number {
+  private plantaVistaBd(vista: number): number {
     if (vista === -1) return 0;
     if (vista === -2) return -1;
     if (vista === -3) return -2;
