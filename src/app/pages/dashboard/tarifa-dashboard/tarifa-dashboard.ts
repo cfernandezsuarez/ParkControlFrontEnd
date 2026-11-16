@@ -14,7 +14,7 @@ export class TarifaDashboard implements OnInit {
   tarifaService = inject(TarifaService);
 
   cargando = signal<boolean>(false);
-  tarifas = signal<Tarifa[]>([]);
+  tarifa = signal<Tarifa | null>(null);
   error = signal<string | null>(null);
 
   ngOnInit() {
@@ -22,10 +22,10 @@ export class TarifaDashboard implements OnInit {
     this.cargando.set(true);
     this.error.set(null);
 
-    this.tarifaService.getTarifasVigentes().subscribe({
+    this.tarifaService.getTarifaVigente().subscribe({
       next: (data) => {
         this.cargando.set(false)
-        this.tarifas.set(data)
+        this.tarifa.set(data)
       },
       error: (err) => {
         this.cargando.set(false)

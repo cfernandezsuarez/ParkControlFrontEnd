@@ -18,24 +18,13 @@ export class Entrada implements OnInit {
   private ticketService = inject(TicketService);
   private tarifaService = inject(TarifaService);
 
-  tarifaSeleccionada: number | null = null;
   matricula = signal<string>('');
   tipoPlazaSeleccionada = signal<string>('');
-  tarifas = signal<Tarifa[]>([])
 
   cargando = signal<boolean>(false);
   error = signal<string | null>(null);
 
-  ngOnInit() {
-    this.tarifaService.getTarifasVigentes().subscribe({
-      next: (data) => {
-        this.tarifas.set(data)
-      },
-      error: (err) => {
-        this.error.set(err)
-      }
-    })
-  }
+  ngOnInit() {}
 
   registrarEntrada() {
     if (!this.matricula().trim()) {

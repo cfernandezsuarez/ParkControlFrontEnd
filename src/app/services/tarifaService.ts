@@ -14,7 +14,7 @@ export class TarifaService {
 
   private apiUrl = environment.apiUrl
 
-  getTarifasVigentes(): Observable<Tarifa[]> {
-    return this.http.get<Tarifa[]>(`${this.apiUrl}/tarifas/vigente`);
+  getTarifaVigente(): Observable<Tarifa> {
+    return this.http.get<Tarifa>(`${this.apiUrl}/tarifas/vigente`);
   }
 }
