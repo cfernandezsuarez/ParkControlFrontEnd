@@ -11,6 +11,6 @@ export enum EstadoPlaza {
 }
 
 export enum EstadoTicket {
-  CERRADO = 'CERRADO',
   ABIERTO = 'ABIERTO',
+  CERRADO = 'CERRADO',
 }

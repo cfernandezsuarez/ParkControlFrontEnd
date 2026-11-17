@@ -80,5 +80,30 @@
       </table>
 
     </div>
+
+    <!-- Controles de paginación -->
+    @if (totalPages() > 1) {
+      <div class="flex justify-between items-center mt-4">
+        <span class="text-sm text-gray-500">
+          Mostrando página {{ page() + 1 }} de {{ totalPages() }} ({{ totalElements() }} tickets en total)
+        </span>
+        <div class="flex gap-2">
+          <button
+            (click)="anteriorPagina()"
+            [disabled]="page() === 0"
+            class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Anterior
+          </button>
+          <button
+            (click)="siguientePagina()"
+            [disabled]="page() >= totalPages() - 1"
+            class="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    }
   }
 </section>

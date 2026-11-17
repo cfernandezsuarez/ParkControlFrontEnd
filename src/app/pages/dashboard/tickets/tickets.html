@@ -1,1 +1,129 @@
-<p>tickets works!</p>
+<section class="w-full h-full flex flex-col gap-5">
+
+  <div class="flex justify-between items-center">
+    <div class="flex flex-col">
+      <span class="text-brand-blue-300 text-sm font-bold">OPERATIVA / PARKCONTROL</span>
+      <h1 class="text-3xl font-bold">Gestión de Tickets</h1>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-4 p-4 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex flex-col gap-1">
+      <label class="text-xs font-bold text-gray-500 uppercase">Estado</label>
+      <select
+        [(ngModel)]="filtroEstado"
+        (change)="aplicarFiltros()"
+        class="border border-gray-200 rounded-lg cursor-pointer p-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
+      >
+        <option [ngValue]="null">Todos</option>
+        <option [ngValue]="EstadoTicket.ABIERTO">Abierto</option>
+        <option [ngValue]="EstadoTicket.CERRADO">Cerrado</option>
+      </select>
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-xs font-bold text-gray-500 uppercase">Precio mín (€)</label>
+      <input
+        type="number"
+        [(ngModel)]="filtroPrecioMin"
+        (change)="aplicarFiltros()"
+        class="border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
+      >
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label class="text-xs font-bold text-gray-500 uppercase">Precio máx (€)</label>
+      <input
+        type="number"
+        [(ngModel)]="filtroPrecioMax"
+        (change)="aplicarFiltros()"
+        class="border border-gray-200 rounded-lg p-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
+      >
+    </div>
+
+    <div class="flex items-end">
+      <button
+        (click)="limpiarFiltros()"
+        class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg cursor-pointer text-sm hover:bg-gray-200 transition-colors"
+      >
+        Limpiar filtros
+      </button>
+    </div>
+  </div>
+
+  @if (cargando()) {
+    <div class="p-8 text-center text-gray-500">Cargando tickets...</div>
+  } @else if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ error() }}
+    </div>
+  } @else {
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <table class="w-full text-sm text-left">
+        <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-100">
+        <tr>
+          <th class="px-6 py-4 font-semibold">Matrícula</th>
+          <th class="px-6 py-4 font-semibold">Estado</th>
+          <th class="px-6 py-4 font-semibold">Entrada</th>
+          <th class="px-6 py-4 font-semibold">Salida</th>
+          <th class="px-6 py-4 font-semibold text-center">Plaza</th>
+          <th class="px-6 py-4 font-semibold text-right">Importe</th>
+        </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (t of tickets(); track t.id) {
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 font-bold text-gray-800 whitespace-nowrap">{{ t.matricula }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span
+                  [class.bg-green-100]="t.estado === EstadoTicket.ABIERTO"
+                  [class.text-green-700]="t.estado === EstadoTicket.ABIERTO"
+                  [class.bg-gray-200]="t.estado === EstadoTicket.CERRADO"
+                  [class.text-gray-600]="t.estado === EstadoTicket.CERRADO"
+                  class="text-xs font-bold px-2.5 py-1 rounded-full uppercase"
+                >
+                  {{ t.estado }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-gray-600 whitespace-nowrap">{{ t.horaEntrada | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="px-6 py-4 text-gray-600 whitespace-nowrap">
+                {{ t.horaSalida ? (t.horaSalida | date:'dd/MM/yyyy HH:mm') : 'En curso...' }}
+              </td>
+              <td class="px-6 py-4 text-gray-600 text-center whitespace-nowrap">{{ t.numeroPlaza ?? 'N/A' }}</td>
+              <td class="px-6 py-4 text-right font-bold text-brand-blue-600 whitespace-nowrap">{{ t.importe }} €</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="px-6 py-12 text-center text-gray-500">No hay tickets registrados.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (totalPages() > 1) {
+      <div class="flex justify-between items-center mt-4">
+        <span class="text-sm text-gray-500">
+          Mostrando página {{ page() + 1 }} de {{ totalPages() }} ({{ totalElements() }} tickets en total)
+        </span>
+        <div class="flex gap-2">
+          <button
+            (click)="anteriorPagina()"
+            [disabled]="page() === 0"
+            class="px-4 py-2 rounded-lg cursor-pointer bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Anterior
+          </button>
+          <button
+            (click)="siguientePagina()"
+            [disabled]="page() >= totalPages() - 1"
+            class="px-4 py-2 rounded-lg cursor-pointer bg-gray-100 text-gray-700 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    }
+  }
+</section>
