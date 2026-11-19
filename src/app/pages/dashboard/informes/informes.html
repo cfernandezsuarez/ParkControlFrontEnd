@@ -1,1 +1,131 @@
-<p>informes works!</p>
+<section class="w-full h-full flex flex-col gap-5">
+
+  <div class="flex flex-col">
+    <span class="text-brand-blue-300 text-sm font-bold">ADMINISTRACIÓN / PARKCONTROL</span>
+    <h1 class="text-3xl font-bold">Informes</h1>
+  </div>
+
+  <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex justify-between items-center border-b border-gray-100 pb-4">
+      <h2 class="text-xl font-bold text-gray-800">Recaudación por día</h2>
+    </div>
+
+    <div class="flex flex-wrap gap-4 items-end">
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-bold text-gray-500 uppercase">Desde</label>
+        <input
+          type="date"
+          [(ngModel)]="desde"
+          class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
+        >
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-bold text-gray-500 uppercase">Hasta</label>
+        <input
+          type="date"
+          [(ngModel)]="hasta"
+          class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
+        >
+      </div>
+
+      <button
+        (click)="cargarRecaudacion()"
+        [disabled]="cargandoRecaudacion()"
+        class="px-6 py-2 cursor-pointer bg-brand-blue-300 text-white rounded-lg font-bold hover:bg-brand-blue-400 transition-colors disabled:opacity-50"
+      >
+        Consultar
+      </button>
+    </div>
+
+    @if (errorRecaudacion()) {
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        {{ errorRecaudacion() }}
+      </div>
+    }
+
+    @if (cargandoRecaudacion()) {
+      <div class="p-8 text-center text-gray-500">Cargando recaudación...</div>
+    } @else {
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+          <thead class="text-xs text-gray-500 uppercase bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 rounded-l-lg">Día</th>
+            <th class="px-4 py-3 text-right rounded-r-lg">Importe</th>
+          </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            @for (r of recaudacion(); track r.dia) {
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3 font-medium text-gray-800">{{ r.dia }}</td>
+                <td class="px-4 py-3 text-right font-bold text-brand-blue-600">{{ r.importeTotal | number:'1.2-2' }} €</td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="2" class="px-4 py-8 text-center text-gray-500">No hay datos para este rango de fechas.</td>
+              </tr>
+            }
+          </tbody>
+          @if (recaudacion().length > 0) {
+            <tfoot>
+            <tr class="bg-gray-100">
+              <td class="px-4 py-3 font-bold text-gray-800">Total</td>
+              <td class="px-4 py-3 text-right font-bold text-brand-blue-600 text-lg">{{ totalRecaudado() | number:'1.2-2' }} €</td>
+            </tr>
+            </tfoot>
+          }
+        </table>
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex justify-between items-center border-b border-gray-100 pb-4">
+      <h2 class="text-xl font-bold text-gray-800">Ocupación por planta y estancia media</h2>
+      <button
+        (click)="cargarOcupacion()"
+        [disabled]="cargandoOcupacion()"
+        class="px-4 py-2 cursor-pointer bg-brand-blue-300 text-white rounded-lg text-sm hover:bg-brand-blue-400 disabled:opacity-50 transition-colors"
+      >
+        Actualizar
+      </button>
+    </div>
+
+    @if (errorOcupacion()) {
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        {{ errorOcupacion() }}
+      </div>
+    }
+
+    @if (cargandoOcupacion()) {
+      <div class="p-8 text-center text-gray-500">Cargando ocupación...</div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        @for (o of ocupacion(); track o.planta) {
+          <div class="flex flex-col bg-gray-50 rounded-2xl p-5 border border-gray-100">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-lg font-bold text-gray-700">Planta {{ o.planta }}</span>
+              <span class="text-xs font-bold text-gray-500 bg-white px-3 py-1 rounded-full">Capacidad</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <div class="flex items-baseline gap-2">
+                <span class="text-4xl font-extrabold text-brand-blue-600">{{ o.ocupadas }}</span>
+                <span class="text-sm text-gray-500">plazas ocupadas</span>
+              </div>
+
+              <div class="flex justify-between text-sm mt-2 pt-2 border-t border-gray-200">
+                <span class="text-gray-500">Estancia media</span>
+                <span class="font-bold text-gray-800">{{ o.estanciaMediaMinutos }} min</span>
+              </div>
+            </div>
+          </div>
+        } @empty {
+          <div class="col-span-full p-8 text-center text-gray-500">No hay datos de ocupación.</div>
+        }
+      </div>
+    }
+  </div>
+
+</section>
