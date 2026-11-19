@@ -14,6 +14,7 @@ import { Informes } from './pages/dashboard/informes/informes';
 import { authGuard } from './guards/authGuard';
 import { rolGuard } from './guards/rolGuard';
 import { Entrada } from './pages/dashboard/entrada/entrada';
+import {TarifaAdmin} from './pages/dashboard/tarifa-admin/tarifa-admin';
 
 export const routes: Routes = [
   // 1. ZONA PÚBLICA
@@ -79,6 +80,12 @@ export const routes: Routes = [
         canActivate: [rolGuard],
         data: { roles: ['ADMIN'] },
       },
+      {
+        path: 'tarifas-total',
+        component: TarifaAdmin,
+        canActivate: [rolGuard],
+        data: { roles: ['ADMIN'] },
+      }
     ],
   },
 

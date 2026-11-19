@@ -1,0 +1,68 @@
+<section class="w-full h-full flex flex-col gap-5">
+
+  <div class="flex flex-col">
+    <span class="text-brand-blue-300 text-sm font-bold">ADMIN / PARKCONTROL</span>
+    <h1 class="text-3xl font-bold">Lista de Tarifas</h1>
+  </div>
+
+  @if (cargando()) {
+    <div class="p-8 text-center text-gray-500">Cargando tarifa vigente...</div>
+  } @else if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ error() }}
+    </div>
+  }
+  @if (!cargando()) {
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+      @for (tarifa of tarifas(); track tarifa.id) {
+        <div class="flex flex-col bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+
+          <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50/50">
+            <span class="text-lg font-bold text-gray-800">{{ tarifa.nombre }}</span>
+
+            <span class="text-xs font-bold px-2 py-1 rounded-md bg-brand-blue-50 text-brand-blue-500 uppercase tracking-wide">
+            @if (tarifa.topeMaximo >= 1440) {
+              Día
+            } @else if (tarifa.topeMaximo >= 60) {
+              {{ tarifa.topeMaximo / 60 }} {{ tarifa.topeMaximo / 60 > 1 ? 'Horas' : 'Hora' }}
+            } @else {
+              {{ tarifa.topeMaximo }} min
+            }
+          </span>
+          </div>
+
+          <div class="flex flex-col items-center justify-center p-6 gap-1">
+          <span class="text-4xl font-extrabold text-brand-blue-600">
+            {{ tarifa.precio }}<span class="text-2xl">€</span>
+          </span>
+            <span class="text-sm text-gray-400 font-medium">/ minuto</span>
+          </div>
+
+          <div class="flex flex-col gap-2 p-4 bg-gray-50 mt-auto">
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Tope máximo</span>
+              <span class="font-semibold text-gray-800">{{ tarifa.topeMaximo }} min</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Cortesía</span>
+              <span class="font-semibold text-gray-800">{{ tarifa.minCortesia }} min</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-gray-500">Vigente desde</span>
+              <span class="font-medium text-gray-600 text-xs">{{ tarifa.fecha | date:'dd/MM/yyyy' }}</span>
+            </div>
+          </div>
+        </div>
+      }
+
+    </div>
+
+  } @else {
+    <div class="p-8 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">
+      No hay tarifas registradas en el sistema.
+    </div>
+  }
+</section>
+

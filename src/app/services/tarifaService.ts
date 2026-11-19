@@ -17,4 +17,8 @@ export class TarifaService {
   getTarifaVigente(): Observable<Tarifa> {
     return this.http.get<Tarifa>(`${this.apiUrl}/tarifas/vigente`);
   }
+
+  getTarifasTotal() :Observable<Tarifa[]> {
+    return this.http.get<Tarifa[]>(`${this.apiUrl}/tarifas/total`);
+  }
 }
