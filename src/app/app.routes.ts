@@ -15,6 +15,7 @@ import { authGuard } from './guards/authGuard';
 import { rolGuard } from './guards/rolGuard';
 import { Entrada } from './pages/dashboard/entrada/entrada';
 import {TarifaAdmin} from './pages/dashboard/tarifa-admin/tarifa-admin';
+import {Cajero} from './pages/dashboard/cajero/cajero';
 
 export const routes: Routes = [
   // 1. ZONA PÚBLICA
@@ -72,6 +73,12 @@ export const routes: Routes = [
         canActivate: [rolGuard],
         data: { roles: ['OPERADOR', 'ADMIN'] },
       },
+      {
+        path: 'cajero',
+        component: Cajero,
+        canActivate: [rolGuard],
+        data: { roles: ['OPERADOR', 'ADMIN'] },
+      },
 
       // ADMIN
       {
@@ -85,7 +92,7 @@ export const routes: Routes = [
         component: TarifaAdmin,
         canActivate: [rolGuard],
         data: { roles: ['ADMIN'] },
-      }
+      },
     ],
   },
 

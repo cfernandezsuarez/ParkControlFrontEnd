@@ -1,1 +1,84 @@
-<p>cajero works!</p>
+<section class="w-full h-full flex flex-col gap-5">
+
+  <div class="flex flex-col">
+    <span class="text-brand-blue-300 text-sm font-bold">OPERATIVA / PARKCONTROL</span>
+    <h1 class="text-3xl font-bold">Cajero</h1>
+  </div>
+
+  <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div class="flex flex-col gap-2">
+      <label for="matricula" class="uppercase text-sm font-bold text-gray-600">Matrícula</label>
+      <div class="flex gap-2">
+        <input
+          [(ngModel)]="matricula"
+          name="matricula"
+          id="matricula"
+          type="text"
+          placeholder="Ej: 1234BCD"
+          class="flex-1 py-3 px-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
+          (keyup.enter)="consultarImporte()"
+        >
+        <button
+          (click)="consultarImporte()"
+          [disabled]="cargando()"
+          class="px-6 py-3 cursor-pointer bg-brand-blue-300 text-white rounded-lg font-bold hover:bg-brand-blue-400 transition-colors disabled:opacity-50 flex items-center gap-2"
+        >
+          <svg lucideSearch class="w-5 h-5"></svg>
+          Consultar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (error()) {
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ error() }}
+    </div>
+  }
+  @if (exito()) {
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+      {{ exito() }}
+    </div>
+  }
+
+  @if (cargando()) {
+    <div class="p-8 text-center text-gray-500">Calculando importe...</div>
+  } @else if (importe()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <div class="flex flex-col gap-3 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+        <h2 class="text-xl font-bold text-gray-800">Ticket {{ importe()!.matricula }}</h2>
+        <div class="flex flex-col gap-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-500">Minutos transcurridos</span>
+            <span class="font-bold text-gray-800">{{ importe()!.minutosTranscurridos }} min</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Minutos de cortesía</span>
+            <span class="font-bold text-gray-800">{{ importe()!.minutosCortesia }} min</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Minutos cobrados</span>
+            <span class="font-bold text-gray-800">{{ importe()!.minutosCobrados }} min</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3 p-6 bg-brand-blue-300 rounded-2xl shadow-sm text-white justify-between">
+        <div class="flex flex-col gap-1">
+          <span class="text-sm font-medium opacity-80">Importe a pagar</span>
+          <span class="text-5xl font-extrabold">{{ importe()!.importe }} €</span>
+        </div>
+        <button
+          (click)="cobrar()"
+          [disabled]="cobrando()"
+          class="w-full py-3 cursor-pointer bg-white text-brand-blue-600 rounded-lg font-bold hover:bg-gray-100 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+        >
+          <svg lucideCreditCard class="w-5 h-5"></svg>
+          @if (cobrando()) { Cobrando... } @else { Cobrar {{ importe()!.importe }} € }
+        </button>
+      </div>
+
+    </div>
+  }
+</section>

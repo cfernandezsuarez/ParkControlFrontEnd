@@ -15,3 +15,25 @@ export interface TicketDTO {
   estado: EstadoTicket;
   numeroPlaza: number | null;
 }
+
+export interface ImporteTicketDTO {
+  ticketId: number;
+  matricula: string;
+  minutosTranscurridos: number;
+  minutosCortesia: number;
+  minutosCobrados: number;
+  importe: number;
+  mensaje: string;
+}
+
+export interface TicketPagadoDTO {
+  ticketId: number;
+  matricula: string;
+  horaEntrada: string;
+  horaSalida: string;
+  minutosTotales: number;
+  minutosDescuento: number;
+  importeFinal: number;
+  numeroPlaza: number;
+  mensaje: string;
+}
