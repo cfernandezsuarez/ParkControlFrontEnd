@@ -1,0 +1,60 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+  <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col">
+
+    <div class="p-6 border-b border-gray-100">
+      <h2 class="text-xl font-bold text-gray-800">Nuevo Abonado</h2>
+    </div>
+
+    <form (ngSubmit)="crearAbonado()" class="p-6 flex flex-col gap-4">
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-bold text-gray-600 uppercase">Nombre *</label>
+        <input type="text" name="nombre" [(ngModel)]="nuevoNombre" required
+               class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400">
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-bold text-gray-600 uppercase">Email *</label>
+        <input type="email" name="email" [(ngModel)]="nuevoEmail" required
+               class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400">
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-bold text-gray-600 uppercase">Matrícula *</label>
+        <input type="text" name="matricula" [(ngModel)]="nuevaMatricula" required
+               placeholder="Ej: 1234BCD"
+               class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400 uppercase">
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-1 flex flex-col gap-1">
+          <label class="text-xs font-bold text-gray-600 uppercase">Fecha inicio *</label>
+          <input type="datetime-local" name="fechaInicio" [(ngModel)]="nuevaFechaInicio" required
+                 class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400">
+        </div>
+        <div class="flex-1 flex flex-col gap-1">
+          <label class="text-xs font-bold text-gray-600 uppercase">Fecha fin *</label>
+          <input type="datetime-local" name="fechaFin" [(ngModel)]="nuevaFechaFin" required
+                 class="border border-gray-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-brand-blue-400">
+        </div>
+      </div>
+
+      @if (error()) {
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
+          {{ error() }}
+        </div>
+      }
+
+      <div class="flex justify-end gap-3 mt-4">
+        <button type="button" (click)="cerrar.emit()"
+                class="px-4 py-2 rounded-lg cursor-pointer bg-gray-200 text-gray-700 font-bold hover:bg-gray-300 transition-colors">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="creando()"
+                class="px-4 py-2 rounded-lg cursor-pointer bg-brand-blue-300 text-white font-bold hover:bg-brand-blue-400 transition-colors disabled:opacity-50">
+          @if (creando()) { Creando... } @else { Crear Abonado }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

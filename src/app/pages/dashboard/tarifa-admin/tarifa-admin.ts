@@ -24,49 +24,49 @@ export class TarifaAdmin implements OnInit {
   eliminando = signal<boolean>(false);
 
   ngOnInit() {
-    this.cargarTarifas();
+    this.cargarTarifas()
   }
 
   cargarTarifas() {
-    this.cargando.set(true);
-    this.error.set('');
+    this.cargando.set(true)
+    this.error.set('')
 
     this.tarifaService.getTarifasTotal().subscribe({
       next: (data) => {
-        this.tarifas.set(data);
-        this.cargando.set(false);
+        this.tarifas.set(data)
+        this.cargando.set(false)
       },
       error: (err: HttpErrorResponse) => {
-        this.error.set(err.error?.detail || 'Error al cargar las tarifas');
-        this.cargando.set(false);
+        this.error.set(err.error?.detail || 'Error al cargar las tarifas')
+        this.cargando.set(false)
       }
-    });
+    })
   }
 
   abrirModalEliminar(tarifa: Tarifa) {
-    this.tarifaAEliminar.set(tarifa);
+    this.tarifaAEliminar.set(tarifa)
   }
 
   cancelarEliminar() {
-    this.tarifaAEliminar.set(null);
+    this.tarifaAEliminar.set(null)
   }
 
   confirmarEliminar() {
-    const tarifa = this.tarifaAEliminar();
-    if (!tarifa) return;
+    const tarifa = this.tarifaAEliminar()
+    if (!tarifa) return
 
     this.eliminando.set(true);
     this.tarifaService.eliminarTarifa(tarifa.id).subscribe({
       next: () => {
-        this.eliminando.set(false);
-        this.tarifaAEliminar.set(null);
-        this.cargarTarifas();
+        this.eliminando.set(false)
+        this.tarifaAEliminar.set(null)
+        this.cargarTarifas()
       },
       error: (err: HttpErrorResponse) => {
-        this.eliminando.set(false);
-        this.error.set(err.error?.detail || 'Error al eliminar la tarifa');
-        this.tarifaAEliminar.set(null);
+        this.eliminando.set(false)
+        this.error.set(err.error?.detail || 'Error al eliminar la tarifa')
+        this.tarifaAEliminar.set(null)
       }
-    });
+    })
   }
 }
