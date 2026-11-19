@@ -6,13 +6,12 @@
   </div>
 
   @if (cargando()) {
-    <div class="p-8 text-center text-gray-500">Cargando tarifa vigente...</div>
+    <div class="p-8 text-center text-gray-500">Cargando tarifas...</div>
   } @else if (error()) {
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
       {{ error() }}
     </div>
-  }
-  @if (!cargando()) {
+  } @else {
 
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
 
@@ -21,29 +20,28 @@
 
           <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50/50">
             <span class="text-lg font-bold text-gray-800">{{ tarifa.nombre }}</span>
-
             <span class="text-xs font-bold px-2 py-1 rounded-md bg-brand-blue-50 text-brand-blue-500 uppercase tracking-wide">
-            @if (tarifa.topeMaximo >= 1440) {
-              Día
-            } @else if (tarifa.topeMaximo >= 60) {
-              {{ tarifa.topeMaximo / 60 }} {{ tarifa.topeMaximo / 60 > 1 ? 'Horas' : 'Hora' }}
-            } @else {
-              {{ tarifa.topeMaximo }} min
-            }
-          </span>
+              @if (tarifa.topeMaximo >= 1440) {
+                Día
+              } @else if (tarifa.topeMaximo >= 60) {
+                {{ tarifa.topeMaximo / 60 }} {{ tarifa.topeMaximo / 60 > 1 ? 'Horas' : 'Hora' }}
+              } @else {
+                {{ tarifa.topeMaximo }} min
+              }
+            </span>
           </div>
 
           <div class="flex flex-col items-center justify-center p-6 gap-1">
-          <span class="text-4xl font-extrabold text-brand-blue-600">
-            {{ tarifa.precio }}<span class="text-2xl">€</span>
-          </span>
+            <span class="text-4xl font-extrabold text-brand-blue-600">
+              {{ tarifa.precio }}<span class="text-2xl">€</span>
+            </span>
             <span class="text-sm text-gray-400 font-medium">/ minuto</span>
           </div>
 
           <div class="flex flex-col gap-2 p-4 bg-gray-50 mt-auto">
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Tope máximo</span>
-              <span class="font-semibold text-gray-800">{{ tarifa.topeMaximo }} min</span>
+              <span class="font-semibold text-gray-800">{{ tarifa.topeMaximo }} €</span>
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-gray-500">Cortesía</span>
@@ -54,15 +52,33 @@
               <span class="font-medium text-gray-600 text-xs">{{ tarifa.fecha | date:'dd/MM/yyyy' }}</span>
             </div>
           </div>
+
+          <div class="flex justify-end py-2 px-4 gap-5">
+            <svg lucidePenLine class="size-4 cursor-pointer text-gray-500 hover:text-brand-blue-500 transition-colors"></svg>
+            <svg
+              lucideTrash
+              class="size-4 cursor-pointer text-red-500 hover:text-red-700 transition-colors"
+              (click)="abrirModalEliminar(tarifa)"
+            ></svg>
+          </div>
+        </div>
+      } @empty {
+        <div class="col-span-full p-8 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">
+          No hay tarifas registradas en el sistema.
         </div>
       }
 
     </div>
-
-  } @else {
-    <div class="p-8 text-center text-gray-500 bg-white rounded-2xl border border-gray-100">
-      No hay tarifas registradas en el sistema.
-    </div>
   }
-</section>
 
+  @if (tarifaAEliminar()) {
+    <app-confirm-modal
+      titulo="Eliminar tarifa"
+      [mensaje]="'¿Estás seguro de que quieres eliminar la tarifa ' + tarifaAEliminar()!.nombre + '?'"
+      textoConfirmar="Eliminar"
+      (confirmar)="confirmarEliminar()"
+      (cancelar)="cancelarEliminar()"
+    />
+  }
+
+</section>

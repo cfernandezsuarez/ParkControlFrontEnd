@@ -1,11 +1,9 @@
 
-export class Tarifa {
-  constructor(
-    readonly id: number,
-    public nombre: string,
-    public topeMaximo: number,
-    public fecha: string,
-    public minCortesia: number,
-    public precio: number
-  ) {}
+export interface Tarifa {
+  id: number;
+  nombre: string;
+  topeMaximo: number;
+  fecha: string;
+  minCortesia: number;
+  precio: number;
 }

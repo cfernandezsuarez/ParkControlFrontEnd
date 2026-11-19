@@ -21,4 +21,8 @@ export class TarifaService {
   getTarifasTotal() :Observable<Tarifa[]> {
     return this.http.get<Tarifa[]>(`${this.apiUrl}/tarifas/total`);
   }
+
+  eliminarTarifa(id: number): Observable<string> {
+    return this.http.delete(`${this.apiUrl}/tarifas/${id}/eliminar`, { responseType: 'text' });
+  }
 }

@@ -4,8 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { RecaudacionDiaDTO, OcupacionPlantaDTO } from '../models/dto/informeDto';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
+
 export class InformeService {
+
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 

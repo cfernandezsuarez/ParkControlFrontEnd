@@ -1,11 +1,9 @@
 import { TipoPlaza, EstadoPlaza } from './enums';
 
-export class Plazas {
-    constructor(
-        readonly id: number,
-        public numero: number,
-        public planta: number,
-        public tipo: TipoPlaza,
-        public estado: EstadoPlaza,
-    ) {}
+export interface Plazas {
+  id: number;
+  numero: number;
+  planta: number;
+  tipo: TipoPlaza;
+  estado: EstadoPlaza;
 }
