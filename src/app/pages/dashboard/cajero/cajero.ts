@@ -13,6 +13,7 @@ import { LucideSearch, LucideCreditCard, LucideClock } from '@lucide/angular';
   styleUrl: './cajero.css'
 })
 export class Cajero {
+
   private ticketService = inject(TicketService);
 
   matricula = '';
@@ -46,13 +47,16 @@ export class Cajero {
   }
 
   cobrar() {
-    if (!this.importe()) return;
+    const ticket = this.importe();
+    if (!ticket || this.cobrando()) return;
+
+    const matriculaTicket = ticket.matricula;
 
     this.cobrando.set(true);
     this.error.set(null);
     this.exito.set(null);
 
-    this.ticketService.pagar({ matricula: this.matricula }).subscribe({
+    this.ticketService.pagar({ matricula: matriculaTicket }).subscribe({
       next: (respuesta) => {
         this.cobrando.set(false);
         this.exito.set(`Ticket cobrado: ${respuesta.importeFinal} €. Plaza ${respuesta.numeroPlaza} liberada.`);

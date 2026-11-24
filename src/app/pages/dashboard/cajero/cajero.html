@@ -15,12 +15,13 @@
           id="matricula"
           type="text"
           placeholder="Ej: 1234BCD"
+          [disabled]="cobrando()"
           class="flex-1 py-3 px-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-blue-400"
           (keyup.enter)="consultarImporte()"
         >
         <button
           (click)="consultarImporte()"
-          [disabled]="cargando()"
+          [disabled]="cargando() || cobrando()"
           class="px-6 py-3 cursor-pointer bg-brand-blue-300 text-white rounded-lg font-bold hover:bg-brand-blue-400 transition-colors disabled:opacity-50 flex items-center gap-2"
         >
           <svg lucideSearch class="w-5 h-5"></svg>
@@ -68,6 +69,9 @@
         <div class="flex flex-col gap-1">
           <span class="text-sm font-medium opacity-80">Importe a pagar</span>
           <span class="text-5xl font-extrabold">{{ importe()!.importe }} €</span>
+          @if (importe()!.importe === 0) {
+            <p class="text-sm">{{ importe()!.mensaje }}</p>
+          }
         </div>
         <button
           (click)="cobrar()"
@@ -75,7 +79,9 @@
           class="w-full py-3 cursor-pointer bg-white text-brand-blue-600 rounded-lg font-bold hover:bg-gray-100 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
         >
           <svg lucideCreditCard class="w-5 h-5"></svg>
-          @if (cobrando()) { Cobrando... } @else { Cobrar {{ importe()!.importe }} € }
+          @if (cobrando()) { Procesando... }
+          @else if (importe()!.importe === 0) { Cerrar ticket }
+          @else { Cobrar {{ importe()!.importe }} € }
         </button>
       </div>
 
