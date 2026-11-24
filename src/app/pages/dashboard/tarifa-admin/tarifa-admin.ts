@@ -5,9 +5,10 @@ import { DatePipe } from '@angular/common';
 import { LucidePenLine, LucideTrash } from '@lucide/angular';
 import { ConfirmModal } from '../../../components/confirm-modal/confirm-modal';
 import { HttpErrorResponse } from '@angular/common/http';
+import { EditarTarifaModal } from '../../../components/editar-tarifa-modal/editar-tarifa-modal';
 
 @Component({
-  imports: [DatePipe, LucidePenLine, LucideTrash, ConfirmModal],
+  imports: [DatePipe, LucidePenLine, LucideTrash, ConfirmModal, EditarTarifaModal],
   selector: 'app-tarifa-admin',
   styleUrl: './tarifa-admin.css',
   templateUrl: './tarifa-admin.html',
@@ -20,6 +21,7 @@ export class TarifaAdmin implements OnInit {
   cargando = signal<boolean>(false);
   error = signal<string>('');
 
+  tarifaAEditar = signal<Tarifa | null>(null);
   tarifaAEliminar = signal<Tarifa | null>(null);
   eliminando = signal<boolean>(false);
 
@@ -68,5 +70,17 @@ export class TarifaAdmin implements OnInit {
         this.tarifaAEliminar.set(null)
       }
     })
+  }
+
+  abrirModalEditar(tarifa: Tarifa) {
+    this.tarifaAEditar.set(tarifa);
+  }
+
+  cerrarModalEditar() {
+    this.tarifaAEditar.set(null);
+  }
+
+  onTarifaActualizada() {
+    this.cargarTarifas();
   }
 }
