@@ -72,6 +72,20 @@ export class TarifaAdmin implements OnInit {
     })
   }
 
+  esVigente(tarifa: Tarifa) {
+    const fechaActual = new Date()
+    const fechaTarifa = new Date(tarifa.fecha);
+
+    if (fechaTarifa > fechaActual) return false;
+
+    const tarifasValidas = this.tarifas().filter(t => new Date(t.fecha) <= fechaActual);
+    const masReciente = tarifasValidas.reduce((max, t) =>
+        new Date(t.fecha) > new Date(max.fecha) ? t : max
+      , tarifasValidas[0]);
+
+    return masReciente?.id === tarifa.id;
+  }
+
   abrirModalEditar(tarifa: Tarifa) {
     this.tarifaAEditar.set(tarifa);
   }

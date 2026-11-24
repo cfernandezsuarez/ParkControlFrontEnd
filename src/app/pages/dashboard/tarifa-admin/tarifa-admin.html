@@ -20,7 +20,13 @@
 
           <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-gray-50/50">
             <span class="text-lg font-bold text-gray-800">{{ tarifa.nombre }}</span>
-            <span class="text-xs font-bold px-2 py-1 rounded-md bg-brand-blue-50 text-brand-blue-500 uppercase tracking-wide">
+            <div class="flex gap-2">
+              @if (esVigente(tarifa)) {
+                <span class="text-xs font-bold px-2 py-1 rounded-md bg-green-100 text-green-700 uppercase tracking-wide">
+                Vigente
+              </span>
+              }
+              <span class="text-xs font-bold px-2 py-1 rounded-md bg-brand-blue-50 text-brand-blue-500 uppercase tracking-wide">
               @if (tarifa.topeMaximo >= 1440) {
                 Día
               } @else if (tarifa.topeMaximo >= 60) {
@@ -29,6 +35,7 @@
                 {{ tarifa.topeMaximo }} min
               }
             </span>
+            </div>
           </div>
 
           <div class="flex flex-col items-center justify-center p-6 gap-1">
