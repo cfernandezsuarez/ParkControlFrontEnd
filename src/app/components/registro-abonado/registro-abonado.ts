@@ -27,12 +27,12 @@ export class RegistroAbonado {
 
   crearAbonado() {
     if (!this.nuevoEmail || !this.nuevoNombre || !this.nuevaMatricula || !this.nuevaFechaInicio || !this.nuevaFechaFin) {
-      this.error.set('Todos los campos son obligatorios');
+      this.error.set('Todos los campos son obligatorios')
       return;
     }
 
-    this.creando.set(true);
-    this.error.set(null);
+    this.creando.set(true)
+    this.error.set(null)
 
     const request = {
       email: this.nuevoEmail,
@@ -40,18 +40,18 @@ export class RegistroAbonado {
       matricula: this.nuevaMatricula.toUpperCase(),
       fechaInicio: this.nuevaFechaInicio,
       fechaFin: this.nuevaFechaFin
-    };
+    }
 
     this.abonadoService.crearAbonado(request).subscribe({
       next: () => {
-        this.creando.set(false);
-        this.abonadoCreado.emit(); // Avisar al padre
-        this.cerrar.emit();        // Cerrar el modal
+        this.creando.set(false)
+        this.abonadoCreado.emit()
+        this.cerrar.emit()
       },
       error: (err: HttpErrorResponse) => {
-        this.creando.set(false);
-        this.error.set(err.error?.detail || 'Error al crear el abonado');
+        this.creando.set(false)
+        this.error.set(err.error?.detail || 'Error al crear el abonado')
       }
-    });
+    })
   }
 }

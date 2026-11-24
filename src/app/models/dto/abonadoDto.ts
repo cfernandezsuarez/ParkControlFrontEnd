@@ -14,3 +14,11 @@ export interface CrearAbonadoRequest {
   fechaInicio: string;
   fechaFin: string;
 }
+
+export interface ActualizarAbonadoDTO {
+  email?: string;
+  nombre?: string;
+  matricula?: string;
+  fechaInicio?: string;
+  fechaFin?: string;
+}

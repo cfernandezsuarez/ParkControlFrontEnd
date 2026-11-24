@@ -6,6 +6,7 @@ import { Tarifa } from '../../../models/tarifa';
 import { TicketService } from '../../../services/ticketService';
 import { TarifaService } from '../../../services/tarifaService';
 import {TicketEntradaRequest} from '../../../models/dto/ticketDto';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   imports: [LucideCheck, LucideTicket, FormsModule],
@@ -48,9 +49,9 @@ export class Entrada implements OnInit {
         this.matricula.set('');
         this.tipoPlazaSeleccionada.set('');
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         this.cargando.set(false);
-        this.error.set(err.error || 'Error al registrar la entrada');
+        this.error.set(err.error?.detail || 'Error al registrar la entrada');
       }
     });
   }

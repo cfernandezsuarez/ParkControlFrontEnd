@@ -43,6 +43,7 @@
             <th class="px-4 py-3">Matrícula</th>
             <th class="px-4 py-3">Vigencia</th>
             <th class="px-4 py-3 text-center rounded-r-lg">Estado</th>
+            <th class="px-4 py-3 text-center rounded-r-lg">Acciones</th>
           </tr>
           </thead>
           <tbody class="divide-y divide-gray-100">
@@ -62,6 +63,12 @@
                     <span class="text-xs font-bold px-2 py-1 rounded-full bg-red-100 text-red-700">Caducado</span>
                   }
                 </td>
+                <td class="px-4 py-3 text-center">
+                  <div class="flex justify-center gap-3">
+                    <svg lucidePenLine (click)="abrirModalEditar(a)" class="size-4 cursor-pointer text-gray-500 hover:text-brand-blue-500 transition-colors"></svg>
+                    <svg lucideTrash (click)="abrirModalEliminar(a)" class="size-4 cursor-pointer text-red-500 hover:text-red-700 transition-colors"></svg>
+                  </div>
+                </td>
               </tr>
             } @empty {
               <tr>
@@ -73,6 +80,24 @@
       </div>
     }
   </div>
+
+  @if (abonadoAEditar()) {
+    <app-editar-abonado-modal
+      [abonado]="abonadoAEditar()!"
+      (cerrar)="cerrarModalEditar()"
+      (abonadoActualizado)="onAbonadoActualizado()"
+    />
+  }
+
+  @if (abonadoAEliminar()) {
+    <app-confirm-modal
+      titulo="Eliminar abonado"
+      [mensaje]="'¿Estás seguro de que quieres eliminar el abonado ' + abonadoAEliminar()!.nombre + '?'"
+      textoConfirmar="Eliminar"
+      (confirmar)="confirmarEliminar()"
+      (cancelar)="cerrarModalEliminar()"
+    />
+  }
 
   @if (mostrarModal()) {
     <app-registro-abonado
