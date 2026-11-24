@@ -16,7 +16,9 @@ import { ConfirmModal } from '../../../components/confirm-modal/confirm-modal';
   templateUrl: './abonados.html',
   styleUrl: './abonados.css'
 })
+
 export class Abonados implements OnInit {
+
   private abonadoService = inject(AbonadoService);
 
   abonados = signal<AbonadoDTO[]>([]);
@@ -28,6 +30,11 @@ export class Abonados implements OnInit {
   abonadoAEditar = signal<AbonadoDTO | null>(null);
   abonadoAEliminar = signal<AbonadoDTO | null>(null);
 
+  paginaActual = signal<number>(0);
+  tamanoPagina = signal<number>(10);
+  totalPaginas = signal<number>(0);
+  totalElementos = signal<number>(0);
+
   ngOnInit() {
     this.cargarAbonados();
   }
@@ -35,9 +42,12 @@ export class Abonados implements OnInit {
   cargarAbonados() {
     this.cargando.set(true);
     this.error.set(null);
-    this.abonadoService.getAbonados().subscribe({
+
+    this.abonadoService.getAbonados(this.paginaActual(), this.tamanoPagina()).subscribe({
       next: (data) => {
-        this.abonados.set(data);
+        this.abonados.set(data.content);
+        this.totalPaginas.set(data.totalPages);
+        this.totalElementos.set(data.totalElements);
         this.cargando.set(false);
       },
       error: (err: HttpErrorResponse) => {
@@ -45,6 +55,13 @@ export class Abonados implements OnInit {
         this.cargando.set(false);
       }
     });
+  }
+
+  cambiarPagina(nuevaPagina: number) {
+    if (nuevaPagina >= 0 && nuevaPagina < this.totalPaginas()) {
+      this.paginaActual.set(nuevaPagina);
+      this.cargarAbonados();
+    }
   }
 
   abrirModal() {
