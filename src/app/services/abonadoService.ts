@@ -15,12 +15,12 @@ export class AbonadoService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
-  getAbonados(page: number = 0, size: number = 10): Observable<Page<Abonado[]>> {
+  getAbonados(page: number = 0, size: number = 10): Observable<Page<AbonadoDTO>> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
 
-    return this.http.get<Page<Abonado[]>>(`${this.apiUrl}/abonados`, { params });
+    return this.http.get<Page<AbonadoDTO>>(`${this.apiUrl}/abonados`, { params });
   }
 
   crearAbonado(datos: CrearAbonadoRequest): Observable<string> {

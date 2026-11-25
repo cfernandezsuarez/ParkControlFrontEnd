@@ -16,12 +16,16 @@ import { ConfirmModal } from '../../../components/confirm-modal/confirm-modal';
   templateUrl: './abonados.html',
   styleUrl: './abonados.css'
 })
-
 export class Abonados implements OnInit {
 
   private abonadoService = inject(AbonadoService);
 
   abonados = signal<AbonadoDTO[]>([]);
+  totalElements = signal<number>(0);
+  totalPages = signal<number>(0);
+  page = signal<number>(0);
+  size = 4;
+
   cargando = signal<boolean>(false);
   error = signal<string | null>(null);
   exito = signal<string | null>(null);
@@ -29,11 +33,6 @@ export class Abonados implements OnInit {
   mostrarModal = signal<boolean>(false);
   abonadoAEditar = signal<AbonadoDTO | null>(null);
   abonadoAEliminar = signal<AbonadoDTO | null>(null);
-
-  paginaActual = signal<number>(0);
-  tamanoPagina = signal<number>(10);
-  totalPaginas = signal<number>(0);
-  totalElementos = signal<number>(0);
 
   ngOnInit() {
     this.cargarAbonados();
@@ -43,11 +42,11 @@ export class Abonados implements OnInit {
     this.cargando.set(true);
     this.error.set(null);
 
-    this.abonadoService.getAbonados(this.paginaActual(), this.tamanoPagina()).subscribe({
-      next: (data) => {
-        this.abonados.set(data.content);
-        this.totalPaginas.set(data.totalPages);
-        this.totalElementos.set(data.totalElements);
+    this.abonadoService.getAbonados(this.page(), this.size).subscribe({
+      next: (p) => {
+        this.abonados.set(p.content);
+        this.totalElements.set(p.totalElements);
+        this.totalPages.set(p.totalPages);
         this.cargando.set(false);
       },
       error: (err: HttpErrorResponse) => {
@@ -57,9 +56,16 @@ export class Abonados implements OnInit {
     });
   }
 
-  cambiarPagina(nuevaPagina: number) {
-    if (nuevaPagina >= 0 && nuevaPagina < this.totalPaginas()) {
-      this.paginaActual.set(nuevaPagina);
+  anteriorPagina() {
+    if (this.page() > 0) {
+      this.page.set(this.page() - 1);
+      this.cargarAbonados();
+    }
+  }
+
+  siguientePagina() {
+    if (this.page() < this.totalPages() - 1) {
+      this.page.set(this.page() + 1);
       this.cargarAbonados();
     }
   }
@@ -84,40 +90,40 @@ export class Abonados implements OnInit {
   }
 
   abrirModalEditar(abonado: AbonadoDTO) {
-    this.abonadoAEditar.set(abonado)
+    this.abonadoAEditar.set(abonado);
   }
 
   cerrarModalEditar() {
-    this.abonadoAEditar.set(null)
+    this.abonadoAEditar.set(null);
   }
 
   onAbonadoActualizado() {
     this.exito.set('Abonado actualizado correctamente');
-    this.cargarAbonados()
+    this.cargarAbonados();
   }
 
   abrirModalEliminar(abonado: AbonadoDTO) {
-    this.abonadoAEliminar.set(abonado)
+    this.abonadoAEliminar.set(abonado);
   }
 
   cerrarModalEliminar() {
-    this.abonadoAEliminar.set(null)
+    this.abonadoAEliminar.set(null);
   }
 
   confirmarEliminar() {
-    const abonado = this.abonadoAEliminar()
+    const abonado = this.abonadoAEliminar();
     if (!abonado) return;
 
     this.abonadoService.eliminarAbonado(abonado.id).subscribe({
       next: () => {
-        this.exito.set('Abonado eliminado correctamente')
-        this.abonadoAEliminar.set(null)
-        this.cargarAbonados()
+        this.exito.set('Abonado eliminado correctamente');
+        this.abonadoAEliminar.set(null);
+        this.cargarAbonados();
       },
       error: (err: HttpErrorResponse) => {
-        this.error.set(err.error?.detail || 'Error al eliminar el abonado')
-        this.abonadoAEliminar.set(null)
+        this.error.set(err.error?.detail || 'Error al eliminar el abonado');
+        this.abonadoAEliminar.set(null);
       }
-    })
+    });
   }
 }
