@@ -143,32 +143,133 @@
   </div>
 </section>
 
-<section class="flex flex-col items-center justify-center p-15 gap-6 bg-brand-gray-50">
-  <h2 class="text-brand-gray-600 text-3xl text-center font-bold">Ventajas de ParkControl</h2>
-  <p class="text-brand-gray-400 text-center">Una experiencia pública clara, operativa y consistente con la identidad del producto.</p>
-  <div class="flex lg:flex-nowrap flex-wrap gap-3 md:gap-5">
-    <div class="flex flex-1 flex-col gap-2 bg-white p-5 rounded-lg">
-      <svg lucideCircleGauge class="size-8"></svg>
-      <span class="text-brand-gray-600 text-xl font-bold">Disponibilidad por planta y tipo</span>
-      <p class="text-brand-gray-400">Normal, movilidad reducida y cargador eléctrico con estados libres, ocupados y bloqueados por mantenimiento.</p>
+<!-- SECCIÓN 2: CÓMO FUNCIONA (Reemplaza a "Ventajas") -->
+<section class="flex flex-col gap-8 bg-brand-gray-50 py-12 px-6 sm:px-10 lg:px-15">
+  <div class="flex flex-col gap-2">
+    <span class="uppercase text-brand-blue-400 font-bold text-sm">Sin tickets de papel</span>
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2">
+      <h2 class="text-3xl font-bold text-brand-gray-600">Cómo aparcar con ParkControl</h2>
+      <span class="text-brand-gray-400">De la barrera a la salida en tres pasos.</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="flex flex-col justify-between gap-4 bg-white p-6 rounded-xl">
+      <div class="flex justify-between items-center">
+        <span class="text-brand-blue-400 font-bold text-sm bg-brand-blue-50 px-3 py-1 rounded-xl">Paso 01</span>
+        <svg lucideScanLine class="size-6 text-brand-blue-400"></svg>
+      </div>
+      <div class="flex flex-col gap-2">
+        <h3 class="text-brand-gray-600 text-xl font-bold">Entra con tu matrícula</h3>
+        <p class="text-brand-gray-400 text-sm">
+          La cámara registra tu vehículo al acceder y abre tu ticket automáticamente con la tarifa vigente en ese momento.
+        </p>
+      </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2 bg-white p-5 rounded-lg">
-      <svg lucideBadgePercent class="size-8"></svg>
-      <span class="text-brand-gray-600 text-xl font-bold">Promociones validadas por compra</span>
-      <p class="text-brand-gray-400">Cine y gimnasio con descuentos fijos por ticket, sin reserva anticipada ni pago online.</p>
+    <div class="flex flex-col justify-between gap-4 bg-white p-6 rounded-xl">
+      <div class="flex justify-between items-center">
+        <span class="text-brand-blue-400 font-bold text-sm bg-brand-blue-50 px-3 py-1 rounded-xl">Paso 02</span>
+        <svg lucideBadgePercent class="size-6 text-brand-blue-400"></svg>
+      </div>
+      <div class="flex flex-col gap-2">
+        <h3 class="text-brand-gray-600 text-xl font-bold">Valida tus promociones</h3>
+        <p class="text-brand-gray-400 text-sm">
+          Si vas al cine o al gimnasio asociado, indica tu matrícula al comprar para descontar tu estancia al instante.
+        </p>
+      </div>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2 bg-white p-5 rounded-lg">
-      <svg lucideLockKeyhole class="size-8"></svg>
-      <span class="text-brand-gray-600 text-xl font-bold">Tarifa vigente al entrar</span>
-      <p class="text-brand-gray-400">Consultar importe no cierra el ticket; pagar registra salida y libera plaza.</p>
+    <div class="flex flex-col justify-between gap-4 bg-white p-6 rounded-xl">
+      <div class="flex justify-between items-center">
+        <span class="text-brand-blue-400 font-bold text-sm bg-brand-blue-50 px-3 py-1 rounded-xl">Paso 03</span>
+        <svg lucideCreditCard class="size-6 text-brand-blue-400"></svg>
+      </div>
+      <div class="flex flex-col gap-2">
+        <h3 class="text-brand-gray-600 text-xl font-bold">Consulta y paga al salir</h3>
+        <p class="text-brand-gray-400 text-sm">
+          Comprueba el importe cuando quieras sin cerrar el ticket. Al pagar, se registra tu salida y se libera la plaza.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECCIÓN 3: TIPOS DE PLAZA -->
+<section class="flex flex-col gap-8 bg-white py-12 px-6 sm:px-10 lg:px-15">
+  <div class="flex flex-col gap-2">
+    <span class="uppercase text-brand-blue-400 font-bold text-sm">3 plantas subterráneas</span>
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2">
+      <h2 class="text-3xl font-bold text-brand-gray-600">Plazas adaptadas a cada vehículo</h2>
+      <span class="text-brand-gray-400">Disponibilidad actualizada en tiempo real.</span>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div class="flex flex-col gap-3 bg-brand-gray-50 p-6 rounded-xl">
+      <div class="flex items-center justify-center size-11 rounded-lg bg-brand-blue-50">
+        <svg lucideCarFront class="size-6 text-brand-blue-400"></svg>
+      </div>
+      <h3 class="text-brand-gray-600 text-xl font-bold">Plazas estándar</h3>
+      <p class="text-brand-gray-400 text-sm">
+        Amplias y señalizadas en las tres plantas, con control de ocupación y acceso directo a salidas peatonales.
+      </p>
     </div>
 
-    <div class="flex flex-1 flex-col gap-2 bg-white p-5 rounded-lg">
-      <svg lucideUserGroup class="size-8"></svg>
-      <span class="text-brand-gray-600 text-xl font-bold">Abonados mensuales sin pago</span>
-      <p class="text-brand-gray-400">Entrada y salida registradas para abonados vigentes sin cobro adicional.</p>
+    <div class="flex flex-col gap-3 bg-brand-gray-50 p-6 rounded-xl">
+      <div class="flex items-center justify-center size-11 rounded-lg bg-brand-blue-50">
+        <svg lucideAccessibility class="size-6 text-brand-blue-400"></svg>
+      </div>
+      <h3 class="text-brand-gray-600 text-xl font-bold">Movilidad reducida (PMR)</h3>
+      <p class="text-brand-gray-400 text-sm">
+        Ubicadas junto a los ascensores en cada planta para facilitar el acceso sin barreras al centro.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-3 bg-brand-gray-50 p-6 rounded-xl">
+      <div class="flex items-center justify-center size-11 rounded-lg bg-brand-yellow-50">
+        <svg lucideZap class="size-6 text-brand-blue-400"></svg>
+      </div>
+      <h3 class="text-brand-gray-600 text-xl font-bold">Cargadores eléctricos</h3>
+      <p class="text-brand-gray-400 text-sm">
+        Puntos de carga repartidos por planta para aprovechar tu visita al centro mientras recargas tu vehículo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="flex flex-col gap-6 bg-brand-gray-50 py-12 px-6 sm:px-10 lg:px-15">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+    <div class="flex flex-col justify-between gap-5 bg-brand-yellow-50 rounded-xl p-6 sm:p-8">
+      <div class="flex flex-col gap-3">
+        <span class="uppercase text-brand-blue-400 font-bold text-sm">Promociones activas</span>
+        <h3 class="text-2xl sm:text-3xl font-bold text-brand-gray-600">
+          Descuentos por compra en comercios asociados
+        </h3>
+        <p class="text-brand-gray-400">
+          Cine y gimnasio con descuentos fijos por ticket. Sin reservas anticipadas ni pagos online previos.
+        </p>
+      </div>
+      <button routerLink="/promociones" class="flex w-fit gap-2 items-center cursor-pointer bg-brand-blue-200 px-5 py-2.5 rounded-lg text-white uppercase font-semibold hover:bg-brand-blue-300 transition-all">
+        Ver promociones
+        <svg lucideArrowUpRight class="size-5"></svg>
+      </button>
+    </div>
+
+    <div class="flex flex-col justify-between gap-5 bg-brand-blue-400 text-white rounded-xl p-6 sm:p-8">
+      <div class="flex flex-col gap-3">
+        <span class="uppercase text-brand-yellow-100 font-bold text-sm">Abono mensual</span>
+        <h3 class="text-2xl sm:text-3xl font-bold text-white">
+          ¿Aparcas en el centro todos los días?
+        </h3>
+        <p class="text-white/85">
+          Accede y sal con tu matrícula sin cobros adicionales y consulta el historial de tus estancias desde tu área de abonado.
+        </p>
+      </div>
+      <button routerLink="/precio" class="flex w-fit gap-2 items-center cursor-pointer bg-white px-5 py-2.5 rounded-lg text-brand-blue-200 uppercase font-semibold hover:bg-brand-gray-50 transition-all">
+        Consultar tarifas y abonos
+        <svg lucideArrowUpRight class="size-5"></svg>
+      </button>
     </div>
   </div>
 </section>

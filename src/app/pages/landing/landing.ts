@@ -1,7 +1,10 @@
 import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { LucideArrowUpRight, LucideCircleGauge, LucideBadgePercent, LucideLockKeyhole, LucideUserGroup } from '@lucide/angular';
+import {
+  LucideArrowUpRight, LucideCircleGauge, LucideBadgePercent, LucideLockKeyhole, LucideUserGroup,
+  LucideAccessibility, LucideCarFront, LucideZap, LucideScanLine, LucideCreditCard
+} from '@lucide/angular';
 import { PlazaService } from '../../services/plazaService';
 import { PlazasOcupacionDTO } from '../../models/dto/plazasDto';
 
@@ -13,6 +16,11 @@ import { PlazasOcupacionDTO } from '../../models/dto/plazasDto';
     LucideBadgePercent,
     LucideLockKeyhole,
     LucideUserGroup,
+    LucideAccessibility,
+    LucideCarFront,
+    LucideZap,
+    LucideScanLine,
+    LucideCreditCard,
   ],
   selector: 'app-landing',
   standalone: true,
