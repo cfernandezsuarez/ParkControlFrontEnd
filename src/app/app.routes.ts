@@ -17,6 +17,7 @@ import { Entrada } from './pages/dashboard/entrada/entrada';
 import {TarifaAdmin} from './pages/dashboard/tarifa-admin/tarifa-admin';
 import {Cajero} from './pages/dashboard/cajero/cajero';
 import {Abonados} from './pages/dashboard/abonados/abonados';
+import {Promociones} from './pages/promociones/promociones';
 
 export const routes: Routes = [
   // 1. ZONA PÚBLICA
@@ -26,6 +27,7 @@ export const routes: Routes = [
     children: [
       { path: '', component: Landing },
       { path: 'precio', component: Precio },
+      { path: 'promociones', component: Promociones },
       { path: 'login', component: Auth },
       { path: 'acceso-denegado', component: AccesoDenegado },
     ],

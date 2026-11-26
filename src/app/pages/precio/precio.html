@@ -6,7 +6,15 @@
     <div class="flex gap-5">
       <span>Por minuto</span>
       <span>·</span>
-      <span>Tope de 18 €/24 h</span>
+      <span>
+        Tope de
+        @if (cargando()) {
+          ...
+        } @else {
+          {{ tarifa()?.topeMaximo }}
+        }
+        €/24 h
+      </span>
       <span>·</span>
       <span>Abono mensual</span>
     </div>
@@ -15,7 +23,14 @@
   <div class="flex items-end justify-start p-5 flex-4/12 rounded-xl bg-[url(/HeroImg.jpg)] bg-no-repeat bg-center bg-cover">
     <div class="flex items-center justify-center gap-2 bg-brand-yellow-100 p-3 rounded-xl">
       <svg lucideClock3 class="size-5 text-brand-blue-400"></svg>
-      <span class="text-black">5 min de cortesía</span>
+      <span class="text-black">
+        @if (cargando()) {
+          ...
+        } @else {
+          {{ tarifa()?.minCortesia }}
+        }
+         min de cortesía
+      </span>
     </div>
   </div>
 </section>
@@ -43,7 +58,11 @@
         <div class="flex-7/12 flex flex-col justify-center">
           <div class="flex items-end">
             <span class="text-7xl font-bold text-brand-gray-600">
-              {{ tarifa()?.precio }} €
+              @if (cargando()) {
+                ...
+              } @else {
+                {{ tarifa()?.precio }} €
+              }
             </span>
               <span class="text-brand-gray-400">
                 / min
@@ -53,7 +72,14 @@
         </div>
         <div class="flex-5/12 flex flex-col gap-3 bg-brand-yellow-50 rounded-xl p-4">
           <span class="font-bold">TOPE POR 24 HORAS</span>
-          <span class="text-4xl font-bold text-brand-gray-600">{{ tarifa()?.topeMaximo }} €</span>
+          <span class="text-4xl font-bold text-brand-gray-600">
+            @if (cargando()) {
+              ...
+            } @else {
+              {{ tarifa()?.topeMaximo }}
+            }
+            €
+          </span>
           <span class="text-sm">El límite de la tarifa por minuto en 24 h.</span>
         </div>
       </div>
@@ -61,7 +87,14 @@
       <div class="flex justify-around">
         <div class="flex items-center gap-1">
           <svg lucideClock class="text-brand-blue-400 size-5"></svg>
-          <span>{{ tarifa()?.minCortesia }} min de cortesía</span>
+          <span>
+            @if (cargando()) {
+              ...
+            } @else {
+              {{ tarifa()?.minCortesia }}
+            }
+             min de cortesía
+          </span>
         </div>
         <div class="flex items-center gap-1">
           <svg lucideScanLine class="text-brand-blue-400 size-5"></svg>
@@ -73,12 +106,12 @@
         </div>
       </div>
       <div class="flex gap-5 items-center">
-        <button class="lg:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
-          Consultar importe
+        <button routerLink="/dashboard/tarifa" class="lg:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
+          Consultar tarifa
           <svg lucideArrowUpRight class="size-5"></svg>
         </button>
         <span class="text-brand-gray-400">
-          Consultar el importe no cierra tu ticket.
+          Consultar la tarifa no cierra tu ticket.
         </span>
       </div>
     </div>
@@ -91,7 +124,7 @@
         <span class="text-brand-blue-400 text-3xl font-bold">
           Consultar abono
         </span>
-        <p class="text-brand-gray-400">Si aparcas a menudo, consulta el importe y las condiciones del abono mensual.</p>
+        <p class="text-brand-gray-400">Si aparcas a menudo, consulta la tarifa y las condiciones del abono mensual.</p>
         <ul class="flex flex-col gap-2">
           <li class="text-sm text-brand-gray-600 flex gap-1 items-center">
             <svg lucideCheck class="text-brand-blue-400 size-5"></svg>
@@ -106,8 +139,8 @@
             Gestión de tus estancias en el área de abonados.
           </li>
         </ul>
-        <button class="lg:flex gap-2 items-center cursor-pointer bg-white px-4 py-2 rounded-lg text-brand-blue-200 uppercase hidden hover:bg-brand-gray-50 border-brand-blue-200 border transition-all w-fit">
-          Consultar abono
+        <button routerLink="/dashboard/tarifa" class="lg:flex gap-2 items-center cursor-pointer bg-white px-4 py-2 rounded-lg text-brand-blue-200 uppercase hidden hover:bg-brand-gray-50 border-brand-blue-200 border transition-all w-fit">
+          Consultar tarifa
           <svg lucideArrowUpRight class="size-5"></svg>
         </button>
       </div>
@@ -119,6 +152,19 @@
   </span>
 </section>
 
-<section class="bg-brand-blue-100">
-
+<section class="flex justify-between bg-brand-blue-50 py-10 px-15">
+  <div class="flex flex-col">
+    <span class="text-brand-gray-600 font-bold text-3xl">Menos vueltas. Más claridad.</span>
+    <span class="text-brand-gray-400">Consulta tu tarifa o revisa las plazas disponibles antes de venir.</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <button routerLink="/dashboard/tarifa" class="lg:flex h-fit gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
+      Consultar tarifa
+      <svg lucideArrowUpRight class="size-5"></svg>
+    </button>
+    <button routerLink="/dashboard/inicio" class="lg:flex h-fit gap-2 items-center cursor-pointer bg-white px-4 py-2 rounded-lg text-brand-blue-200 uppercase hidden hover:bg-brand-gray-50 border-brand-blue-200 border transition-all w-fit">
+      Ver disponibilidad
+      <svg lucideArrowUpRight class="size-5"></svg>
+    </button>
+  </div>
 </section>

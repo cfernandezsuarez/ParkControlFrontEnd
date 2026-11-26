@@ -23,15 +23,21 @@ export class Precio implements OnInit {
   tarifa = signal<Tarifa | null>(null);
 
   error = signal<string | null>(null);
+  cargando = signal<boolean>(false);
 
   ngOnInit() {
+
+    this.cargando.set(true)
+    this.error.set(null)
 
     this.tarifaService.getTarifaVigente().subscribe({
       next: (data) => {
         this.tarifa.set(data)
+        this.cargando.set(false)
       },
       error: (err: HttpErrorResponse) => {
         this.error.set(err.error?.detail)
+        this.cargando.set(false)
       }
     })
 
