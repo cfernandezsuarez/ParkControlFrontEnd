@@ -8,7 +8,7 @@
   <div class="flex flex-col gap-4 p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
     <div class="flex flex-col gap-2">
       <label for="matricula" class="uppercase text-sm font-bold text-gray-600">Matrícula</label>
-      <div class="flex gap-2">
+      <div class="flex flex-wrap gap-2">
         <input
           [(ngModel)]="matricula"
           name="matricula"
@@ -22,7 +22,7 @@
         <button
           (click)="consultarImporte()"
           [disabled]="cargando() || cobrando()"
-          class="px-6 py-3 cursor-pointer bg-brand-blue-300 text-white rounded-lg font-bold hover:bg-brand-blue-400 transition-colors disabled:opacity-50 flex items-center gap-2"
+          class="px-6 py-3 cursor-pointer bg-brand-blue-300 text-white rounded-lg font-bold hover:bg-brand-blue-400 transition-colors disabled:opacity-50 flex-1 flex md:max-w-fit md:flex items-center gap-2"
         >
           <svg lucideSearch class="w-5 h-5"></svg>
           Consultar
