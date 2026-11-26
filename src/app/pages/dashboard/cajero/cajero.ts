@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, inject, OnDestroy, signal} from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TicketService } from '../../../services/ticketService';
@@ -16,7 +16,6 @@ import { LucideSearch, LucideCreditCard } from '@lucide/angular';
 export class Cajero implements OnDestroy {
 
   private ticketService = inject(TicketService);
-  private cdr = inject(ChangeDetectorRef);
 
   matricula = '';
   importe = signal<ImporteTicketDTO | null>(null);
@@ -28,7 +27,7 @@ export class Cajero implements OnDestroy {
   private intervaloId: any = null;
 
   ngOnDestroy() {
-    this.detenerPolling();
+    this.detenerIntervalo();
   }
 
   consultarImporte() {
@@ -37,7 +36,7 @@ export class Cajero implements OnDestroy {
       return;
     }
 
-    this.detenerPolling();
+    this.detenerIntervalo();
 
     this.cargando.set(true)
     this.error.set(null)
@@ -48,7 +47,7 @@ export class Cajero implements OnDestroy {
       next: (data) => {
         this.importe.set(data)
         this.cargando.set(false)
-        this.iniciarPolling()
+        this.iniciarIntervalo()
       },
       error: (err: HttpErrorResponse) => {
         this.cargando.set(false)
@@ -71,7 +70,7 @@ export class Cajero implements OnDestroy {
       next: (respuesta) => {
         this.cobrando.set(false)
         this.exito.set(`Ticket cobrado: ${respuesta.importeFinal} €. Plaza ${respuesta.numeroPlaza} liberada.`)
-        this.detenerPolling();
+        this.detenerIntervalo();
         this.importe.set(null)
         this.matricula = ''
       },
@@ -82,26 +81,24 @@ export class Cajero implements OnDestroy {
     })
   }
 
-  private iniciarPolling() {
-    const matriculaActual = this.matricula;
+  private iniciarIntervalo() {
+    const matriculaActual = this.matricula
     this.intervaloId = setInterval(() => {
       this.ticketService.getImporte(matriculaActual).subscribe({
         next: (data) => {
-          this.importe.set(data);
-          this.cdr.detectChanges();
+          this.importe.set(data)
         },
         error: () => {
-          this.detenerPolling();
+          this.detenerIntervalo()
         }
-      });
-    }, 10000);
+      })
+    }, 10000)
   }
 
-  private detenerPolling() {
+  private detenerIntervalo() {
     if (this.intervaloId !== null) {
-      console.log('>>> Deteniendo polling');
-      clearInterval(this.intervaloId);
-      this.intervaloId = null;
+      clearInterval(this.intervaloId)
+      this.intervaloId = null
     }
   }
 }
