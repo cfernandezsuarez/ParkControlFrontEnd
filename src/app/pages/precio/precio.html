@@ -20,7 +20,7 @@
   </div>
 </section>
 
-<section class="flex flex-col gap-5 bg-brand-gray-50 p-15">
+<section class="flex flex-col gap-5 bg-brand-gray-50 py-10 px-15">
   <div class="flex flex-col gap-2">
     <span class="uppercase text-brand-blue-400 font-bold">Elige según tu estancia</span>
     <div class="flex justify-between items-end">
@@ -29,25 +29,87 @@
     </div>
   </div>
   <div class="flex gap-5">
-    <div class="bg-white rounded-xl p-5 flex-8/12">
+    <div class="flex flex-col gap-5 bg-white rounded-xl p-5 flex-8/12">
       <div class="flex justify-between">
         <span class="flex gap-3 items-center font-bold">
           <svg lucideCarFront class="size-5 text-brand-blue-400"></svg>
           Estancia puntual
         </span>
+        <span class="text-brand-gray-400 font-bold text-sm bg-brand-gray-50 px-2 py-1 rounded-xl">
+          Tarifa Vigente
+        </span>
+      </div>
+      <div class="flex justify-between">
+        <div class="flex-7/12 flex flex-col justify-center">
+          <div class="flex items-end">
+            <span class="text-7xl font-bold text-brand-gray-600">
+              {{ tarifa()?.precio }} €
+            </span>
+              <span class="text-brand-gray-400">
+                / min
+            </span>
+          </div>
+          <span class="text-brand-gray-400">Para tus visitas puntuales al centro.</span>
+        </div>
+        <div class="flex-5/12 flex flex-col gap-3 bg-brand-yellow-50 rounded-xl p-4">
+          <span class="font-bold">TOPE POR 24 HORAS</span>
+          <span class="text-4xl font-bold text-brand-gray-600">{{ tarifa()?.topeMaximo }} €</span>
+          <span class="text-sm">El límite de la tarifa por minuto en 24 h.</span>
+        </div>
+      </div>
+      <hr class="text-brand-gray-100">
+      <div class="flex justify-around">
+        <div class="flex items-center gap-1">
+          <svg lucideClock class="text-brand-blue-400 size-5"></svg>
+          <span>{{ tarifa()?.minCortesia }} min de cortesía</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <svg lucideScanLine class="text-brand-blue-400 size-5"></svg>
+          <span>Entrada por matrícula</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <svg lucideCreditCard class="text-brand-blue-400 size-5"></svg>
+          <span>Pago al salir</span>
+        </div>
+      </div>
+      <div class="flex gap-5 items-center">
+        <button class="lg:flex gap-2 items-center cursor-pointer bg-brand-blue-200 px-4 py-2 rounded-lg text-white uppercase hidden hover:bg-brand-blue-300 transition-all">
+          Consultar importe
+          <svg lucideArrowUpRight class="size-5"></svg>
+        </button>
+        <span class="text-brand-gray-400">
+          Consultar el importe no cierra tu ticket.
+        </span>
       </div>
     </div>
-    <div class="bg-brand-blue-50 rounded-xl p-5 flex-4/12">
-      <span class="flex gap-3 items-center font-bold">
+    <div class="bg-brand-blue-50 rounded-xl p-5 flex-4/12 flex flex-col gap-3">
+      <span class="flex gap-3 items-center font-bold text-xl text-brand-gray-600">
         <svg lucideCalendarDays class="size-5 text-brand-blue-400"></svg>
         Abono mensual
       </span>
-      <div>
+      <div class="flex flex-col gap-3">
         <span class="text-brand-blue-400 text-3xl font-bold">
           Consultar abono
         </span>
         <p class="text-brand-gray-400">Si aparcas a menudo, consulta el importe y las condiciones del abono mensual.</p>
-
+        <ul class="flex flex-col gap-2">
+          <li class="text-sm text-brand-gray-600 flex gap-1 items-center">
+            <svg lucideCheck class="text-brand-blue-400 size-5"></svg>
+            Entrada y salida sin cobro adicional.
+          </li>
+          <li class="text-sm text-brand-gray-600 flex gap-1 items-center">
+            <svg lucideCheck class="text-brand-blue-400 size-5"></svg>
+            Registro de entradas y salidas.
+          </li>
+          <li class="text-sm text-brand-gray-600 flex gap-1 items-center">
+            <svg lucideCheck class="text-brand-blue-400 size-5"></svg>
+            Gestión de tus estancias en el área de abonados.
+          </li>
+        </ul>
+        <button class="lg:flex gap-2 items-center cursor-pointer bg-white px-4 py-2 rounded-lg text-brand-blue-200 uppercase hidden hover:bg-brand-gray-50 border-brand-blue-200 border transition-all w-fit">
+          Consultar abono
+          <svg lucideArrowUpRight class="size-5"></svg>
+        </button>
       </div>
     </div>
   </div>
@@ -55,4 +117,8 @@
     <svg lucideCircleAlert class="size-5 text-brand-blue-400"></svg>
     Tu ticket se abre con la matrícula. El pago registra la salida y libera la plaza.
   </span>
+</section>
+
+<section class="bg-brand-blue-100">
+
 </section>
