@@ -18,6 +18,7 @@ import {TarifaAdmin} from './pages/dashboard/tarifa-admin/tarifa-admin';
 import {Cajero} from './pages/dashboard/cajero/cajero';
 import {Abonados} from './pages/dashboard/abonados/abonados';
 import {Promociones} from './pages/promociones/promociones';
+import {PlazasAdmin} from './pages/dashboard/plazas-admin/plazas-admin';
 
 export const routes: Routes = [
   // 1. ZONA PÚBLICA
@@ -102,6 +103,12 @@ export const routes: Routes = [
         canActivate: [rolGuard],
         data: { roles: ['ADMIN'] },
       },
+      {
+        path: 'plazas-admin',
+        component: PlazasAdmin,
+        canActivate: [rolGuard],
+        data: { roles: ['ADMIN'] },
+      }
     ],
   },
 

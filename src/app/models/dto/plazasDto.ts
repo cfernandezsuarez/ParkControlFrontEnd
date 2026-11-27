@@ -32,5 +32,15 @@ export interface PlazasOcupacionDTO {
     primera: ResumenPlantaDTO;
     segunda: ResumenPlantaDTO;
     tercera: ResumenPlantaDTO;
-  };
+  }
+}
+
+export interface CrearPlazaRequest {
+  numero: string;
+  tipo: TipoPlaza;
+}
+
+export interface ActualizarPlazaRequest {
+  numero: string;
+  estado: EstadoPlaza;
 }

@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { PlazasOcupacionDTO, PlazaDTO } from '../models/dto/plazasDto';
+import {PlazasOcupacionDTO, PlazaDTO, CrearPlazaRequest, ActualizarPlazaRequest} from '../models/dto/plazasDto';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import {Plazas} from '../models/plazas';
+import { Page } from '../models/page';
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +15,25 @@ export class PlazaService {
     private http = inject(HttpClient);
 
     private apiUrl = environment.apiUrl
+
+    getPlazas(page: number = 0, size: number = 10): Observable<Page<Plazas>> {
+      const params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString())
+      return this.http.get<Page<Plazas>>(`${this.apiUrl}/plazas`, { params })
+    }
+
+    crearPlaza(datos: CrearPlazaRequest): Observable<string> {
+      return this.http.post(`${this.apiUrl}/plazas`, datos, { responseType: 'text' });
+    }
+
+    actualizarPlaza(id: number, datos: ActualizarPlazaRequest): Observable<Plazas> {
+      return this.http.patch<Plazas>(`${this.apiUrl}/plazas/${id}`, datos);
+    }
+
+    eliminarPlaza(id: number): Observable<string> {
+      return this.http.delete(`${this.apiUrl}/plazas/${id}`, { responseType: 'text' });
+    }
 
     getPlazasTotales(): Observable<number> {
       return this.http.get<number>(`${this.apiUrl}/plazas/total`)
